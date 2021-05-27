@@ -19,7 +19,7 @@ public class PageArgumentConverter implements Converter {
         PageArgument pageArgument=(PageArgument) o;
         writeNode("align",pageArgument.getAlign().toString(),writer);
         writeNode("size",pageArgument.getSize().toString(),writer);
-        writeNode("default-direction",pageArgument.getDirection().toString(),writer);
+        writeNode("direction",pageArgument.getDirection().toString(),writer);
         writeNode("auto-rotate",pageArgument.getAutoRotate()+"",writer);
     }
 
@@ -41,7 +41,7 @@ public class PageArgumentConverter implements Converter {
         }
         builder.setAlign(new PageAlign(elements.get("align")));
         builder.setSize(PageSize.valueOf(elements.get("size")));
-        builder.setDirection(PageDirection.valueOf(elements.get("default-direction")));
+        builder.setDirection(PageDirection.valueOf(elements.get("direction")));
         builder.setAutoRotate(Boolean.parseBoolean(elements.get("auto-rotate")));
         return builder.build();
     }
