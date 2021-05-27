@@ -1,6 +1,5 @@
 package org.vincentyeh.IMG2PDF.pdf.page;
 
-import org.jdom2.Element;
 
 
 public class PageArgument {
@@ -34,14 +33,6 @@ public class PageArgument {
 
         public PageArgument build() {
             return new PageArgument(align, size, direction, auto_rotate);
-        }
-
-        public PageArgument buildFrom(Element element) {
-            setAlign(new PageAlign(element.getChild("align").getValue()));
-            setSize(PageSize.valueOf(element.getChild("size").getValue()));
-            setDirection(PageDirection.valueOf(element.getChild("default-direction").getValue()));
-            setAutoRotate(Boolean.parseBoolean(element.getChild("auto-rotate").getValue()));
-            return build();
         }
     }
 

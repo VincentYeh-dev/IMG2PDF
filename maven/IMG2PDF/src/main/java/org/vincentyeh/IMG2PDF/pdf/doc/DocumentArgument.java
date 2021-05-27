@@ -2,7 +2,6 @@ package org.vincentyeh.IMG2PDF.pdf.doc;
 
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
-import org.jdom2.Element;
 
 public class DocumentArgument {
 
@@ -30,19 +29,6 @@ public class DocumentArgument {
             return new DocumentArgument(owner_password, user_password, ap);
         }
 
-        public DocumentArgument buildFrom(Element element) {
-            Element permission = element.getChild("permission");
-
-            AccessPermission ap = new AccessPermission();
-            ap.setCanPrint(Boolean.parseBoolean(permission.getAttributeValue("canPrint")));
-            ap.setCanModify(Boolean.parseBoolean(permission.getAttributeValue("canModify")));
-
-            setUserPassword(permission.getChild("USER-PASSWORD").getValue());
-            setOwnerPassword(permission.getChild("OWNER-PASSWORD").getValue());
-            setAccessPermission(ap);
-
-            return build();
-        }
     }
 
     private final String owner_password;

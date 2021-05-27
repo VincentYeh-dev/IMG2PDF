@@ -18,7 +18,6 @@ public class TaskListConverter {
         xStream.registerConverter(new PageArgumentConverter());
         xStream.registerConverter(new DocumentArgumentConverter());
         XStream.setupDefaultSecurity(xStream);
-//        xStream.allowTypes(new Class[]{Task.class, PageArgument.class, DocumentArgument.class});
         xStream.allowTypesByWildcard(new String[] {
                 "org.vincentyeh.IMG2PDF.**"
         });
