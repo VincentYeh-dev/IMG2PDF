@@ -1,4 +1,4 @@
-package org.vincentyeh.IMG2PDF.task.parser.converter;
+package org.vincentyeh.IMG2PDF.task.converter.xml;
 
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;

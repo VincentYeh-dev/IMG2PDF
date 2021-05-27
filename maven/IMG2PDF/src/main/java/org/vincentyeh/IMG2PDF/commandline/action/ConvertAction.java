@@ -2,9 +2,9 @@ package org.vincentyeh.IMG2PDF.commandline.action;
 
 import java.awt.Desktop;
 import java.io.*;
+import java.nio.file.Files;
+import java.util.List;
 
-import org.jdom2.Document;
-import org.jdom2.input.DOMBuilder;
 import org.vincentyeh.IMG2PDF.converter.exception.ConversionException;
 import org.vincentyeh.IMG2PDF.converter.exception.OverwriteDenyException;
 import org.vincentyeh.IMG2PDF.converter.exception.ReadImageException;
@@ -13,14 +13,8 @@ import org.vincentyeh.IMG2PDF.SharedSpace;
 import org.vincentyeh.IMG2PDF.commandline.parser.core.HandledException;
 import org.vincentyeh.IMG2PDF.converter.PDFConverter;
 import org.vincentyeh.IMG2PDF.task.Task;
-import org.vincentyeh.IMG2PDF.task.TaskList;
+import org.vincentyeh.IMG2PDF.task.converter.TaskListConverter;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 public class ConvertAction implements Action {
 
@@ -45,7 +39,7 @@ public class ConvertAction implements Action {
             System.out.print(
                     "\t[" + SharedSpace.getResString("public.info.importing") + "] " + src.getAbsolutePath() + "\r");
             try {
-                TaskList tasks = getTaskListFromDocument(getDocumentFromFile(src));
+                List<Task> tasks = getTaskListFromFile(src);
                 System.out.print("\t[" + SharedSpace.getResString("public.info.imported") + "] " + src.getAbsolutePath() + "\r\n\n");
                 System.out.println(SharedSpace.getResString("convert.start_conversion"));
                 convertAllToFile(tasks);
@@ -56,7 +50,7 @@ public class ConvertAction implements Action {
 
     }
 
-    private void convertAllToFile(TaskList tasks) throws Exception {
+    private void convertAllToFile(List<Task> tasks) throws Exception {
 //                TODO:No exception is thrown when task.getArray() is empty.Warning to the user when it happen.
         for (Task task : tasks) {
             try {
@@ -68,10 +62,6 @@ public class ConvertAction implements Action {
         }
     }
 
-
-    private TaskList getTaskListFromDocument(Document document) throws IOException {
-        return new TaskList(document);
-    }
 
     private void openPDF(File file) {
         Desktop desktop = Desktop.getDesktop();
@@ -110,7 +100,7 @@ public class ConvertAction implements Action {
 
     }
 
-    private Document getDocumentFromFile(final File file)
+    private List<Task> getTaskListFromFile(final File file)
             throws HandledException {
         try {
             FileUtils.checkAbsolute(file);
@@ -126,29 +116,14 @@ public class ConvertAction implements Action {
 //            TODO:Print error message
             throw new HandledException(e, getClass());
         }
-
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        // If want to make namespace aware.
-        // factory.setNamespaceAware(true);
-
         try {
-            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-
-//      Disable printing message to console
-            documentBuilder.setErrorHandler(null);
-
-            InputSource source = new InputSource(new InputStreamReader(new FileInputStream(file), SharedSpace.Configuration.DEFAULT_CHARSET));
-            org.w3c.dom.Document w3cDocument = documentBuilder.parse(source);
-            return new DOMBuilder().build(w3cDocument);
-        } catch (ParserConfigurationException e) {
-            throw new HandledException(e, getClass());
-        } catch (SAXException e) {
-            System.err.println("\n\tWrong XML content." + e.getMessage());
-            throw new HandledException(e, getClass());
+            String xml= String.join("\n", Files.readAllLines(file.toPath()));
+            return (new TaskListConverter()).parse(xml);
         } catch (IOException e) {
-//            TODO:Add error message
+//            TODO:Print error message
             throw new HandledException(e, getClass());
         }
+
     }
 
     public static class Builder {

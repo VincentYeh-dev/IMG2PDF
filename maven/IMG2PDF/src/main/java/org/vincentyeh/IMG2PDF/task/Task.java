@@ -48,24 +48,24 @@ public class Task {
 
     }
 
-    public Element toElement() {
-        Element task = new Element("task");
-        Element xml_files = new Element("files");
-        for (File img : images) {
-            Element xml_file = new Element("image");
-            xml_file.addContent(img.getAbsolutePath());
-            xml_files.addContent(xml_file);
-        }
-        task.addContent(xml_files);
-        Element elm_destination = new Element("destination");
-        elm_destination.addContent(pdf_destination.getPath());
-
-        task.addContent(elm_destination);
-        task.addContent(documentArgument.toElement());
-        task.addContent(pageArgument.toElement());
-
-        return task;
-    }
+//    public Element toElement() {
+//        Element task = new Element("task");
+//        Element xml_files = new Element("files");
+//        for (File img : images) {
+//            Element xml_file = new Element("image");
+//            xml_file.addContent(img.getAbsolutePath());
+//            xml_files.addContent(xml_file);
+//        }
+//        task.addContent(xml_files);
+//        Element elm_destination = new Element("destination");
+//        elm_destination.addContent(pdf_destination.getPath());
+//
+//        task.addContent(elm_destination);
+//        task.addContent(documentArgument.toElement());
+//        task.addContent(pageArgument.toElement());
+//
+//        return task;
+//    }
 
     private File[] parseElementsToImages(ArrayList<Element> elements) {
 

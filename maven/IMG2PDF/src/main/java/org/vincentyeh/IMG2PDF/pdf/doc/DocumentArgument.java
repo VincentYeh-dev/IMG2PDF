@@ -55,18 +55,18 @@ public class DocumentArgument {
         this.ap = ap;
     }
 
-    public Element toElement() {
-        Element element = new Element("DocumentArgument");
-
-        Element permission = new Element("permission");
-        permission.setAttribute("canPrint", String.valueOf(ap.canPrint()));
-        permission.setAttribute("canModify", String.valueOf(ap.canModify()));
-        permission.addContent(new Element("OWNER-PASSWORD").addContent(owner_password));
-        permission.addContent(new Element("USER-PASSWORD").addContent(user_password));
-        element.addContent(permission);
-        return element;
-
-    }
+//    public Element toElement() {
+//        Element element = new Element("DocumentArgument");
+//
+//        Element permission = new Element("permission");
+//        permission.setAttribute("canPrint", String.valueOf(ap.canPrint()));
+//        permission.setAttribute("canModify", String.valueOf(ap.canModify()));
+//        permission.addContent(new Element("OWNER-PASSWORD").addContent(owner_password));
+//        permission.addContent(new Element("USER-PASSWORD").addContent(user_password));
+//        element.addContent(permission);
+//        return element;
+//
+//    }
 
     public StandardProtectionPolicy getSpp() {
         return createProtectionPolicy(owner_password, user_password, ap);

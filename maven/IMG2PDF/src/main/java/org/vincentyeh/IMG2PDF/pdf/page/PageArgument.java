@@ -73,15 +73,15 @@ public class PageArgument {
         return auto_rotate;
     }
 
-    public Element toElement() {
-        Element element = new Element("PageArgument");
-        element.addContent(new Element("size").addContent(size.toString()));
-        element.addContent(new Element("align").addContent(align.toString()));
-        element.addContent(new Element("default-direction").addContent(direction.toString()));
-        element.addContent(new Element("auto-rotate").addContent(Boolean.toString(auto_rotate)));
-        return element;
-
-    }
+//    public Element toElement() {
+//        Element element = new Element("PageArgument");
+//        element.addContent(new Element("size").addContent(size.toString()));
+//        element.addContent(new Element("align").addContent(align.toString()));
+//        element.addContent(new Element("default-direction").addContent(direction.toString()));
+//        element.addContent(new Element("auto-rotate").addContent(Boolean.toString(auto_rotate)));
+//        return element;
+//
+//    }
 
     @Override
     public String toString() {
