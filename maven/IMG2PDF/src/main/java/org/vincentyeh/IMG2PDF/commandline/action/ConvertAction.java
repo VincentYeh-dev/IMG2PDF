@@ -117,10 +117,13 @@ public class ConvertAction implements Action {
             throw new HandledException(e, getClass());
         }
         try {
-            String xml= String.join("\n", Files.readAllLines(file.toPath()));
+            String xml= String.join("\n", Files.readAllLines(file.toPath(),SharedSpace.Configuration.DEFAULT_CHARSET));
             return (new TaskListConverter()).parse(xml);
         } catch (IOException e) {
 //            TODO:Print error message
+            throw new HandledException(e, getClass());
+        }catch (com.thoughtworks.xstream.converters.ConversionException e){
+            System.err.println(e.getCause().getMessage());
             throw new HandledException(e, getClass());
         }
 
