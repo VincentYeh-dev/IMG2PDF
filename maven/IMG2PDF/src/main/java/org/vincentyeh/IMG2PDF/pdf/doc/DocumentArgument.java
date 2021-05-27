@@ -82,4 +82,24 @@ public class DocumentArgument {
         return spp;
     }
 
+    public String getOwner_password() {
+        return owner_password;
+    }
+
+    public String getUser_password() {
+        return user_password;
+    }
+
+    public AccessPermission getAp() {
+        return ap;
+    }
+
+    @Override
+    public String toString() {
+        return "DocumentArgument{" +
+                "owner_password='" + owner_password + '\'' +
+                ", user_password='" + user_password + '\'' +
+                ", ap=" + ap +
+                '}';
+    }
 }

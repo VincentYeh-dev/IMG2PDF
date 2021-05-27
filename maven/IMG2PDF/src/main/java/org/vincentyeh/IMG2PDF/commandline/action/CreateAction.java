@@ -159,7 +159,7 @@ public class CreateAction implements Action {
         FileUtils.checkIsDirectory(source_directory);
 
         NameFormatter nf = new NameFormatter(source_directory);
-        return new Task(documentArgument, pageArgument, importSortedImagesFiles(source_directory), new File(nf.format(pdf_dst)));
+        return new Task(documentArgument, pageArgument, importSortedImagesFiles(source_directory), new File(nf.format(pdf_dst)).getAbsoluteFile());
     }
 
     private File[] importSortedImagesFiles(File source_directory) {

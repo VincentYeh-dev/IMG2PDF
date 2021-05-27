@@ -2,6 +2,7 @@ package org.vincentyeh.IMG2PDF.converter.listener;
 
 import org.vincentyeh.IMG2PDF.SharedSpace;
 import org.vincentyeh.IMG2PDF.task.Task;
+import org.vincentyeh.IMG2PDF.task.parser.TaskConverter;
 
 import java.io.File;
 import java.util.Arrays;
@@ -24,6 +25,10 @@ public class DefaultConversionInfoListener implements ConversionInfoListener {
 
     @Override
     public void onConversionPreparing(Task task) {
+        TaskConverter taskConverter=new TaskConverter ();
+        String x=taskConverter.toXml(task);
+        System.out.println(x);
+        System.out.println(taskConverter.parse(x));
         this.task = task;
         total = task.getImages().length;
         perImg = (10. / total);
@@ -38,7 +43,7 @@ public class DefaultConversionInfoListener implements ConversionInfoListener {
             progress -= 1;
             counter++;
         }
-        String name = task.getDestination().getName();
+        String name = task.getPdfDestination().getName();
         System.out.printf("\t" + SharedSpace.getResString("convert.listener.converting") + "\r", new String(progress_bar), getSimplifiedName(name), index + 1, total, file.getName());
     }
 

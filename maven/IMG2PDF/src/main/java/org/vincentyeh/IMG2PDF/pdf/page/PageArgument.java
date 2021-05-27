@@ -83,4 +83,13 @@ public class PageArgument {
 
     }
 
+    @Override
+    public String toString() {
+        return "PageArgument{" +
+                "align=" + align +
+                ", size=" + size +
+                ", direction=" + direction +
+                ", auto_rotate=" + auto_rotate +
+                '}';
+    }
 }
