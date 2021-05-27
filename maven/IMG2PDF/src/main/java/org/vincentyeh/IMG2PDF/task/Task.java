@@ -1,13 +1,8 @@
 package org.vincentyeh.IMG2PDF.task;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import org.vincentyeh.IMG2PDF.pdf.doc.DocumentArgument;
-import org.vincentyeh.IMG2PDF.pdf.page.PageArgument;
 
 @XStreamAlias("task")
 public class Task {
@@ -51,13 +46,4 @@ public class Task {
         return pageArgument;
     }
 
-    @Override
-    public String toString() {
-        return "Task{" +
-                "documentArgument=" + documentArgument +
-                ", pageArgument=" + pageArgument +
-                ", images=" + Arrays.toString(images) +
-                ", pdf_destination=" + pdf_destination +
-                '}';
-    }
 }

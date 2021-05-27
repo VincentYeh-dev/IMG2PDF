@@ -1,10 +1,10 @@
-package org.vincentyeh.IMG2PDF.task.converter;
+package org.vincentyeh.IMG2PDF.task;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.vincentyeh.IMG2PDF.task.Task;
-import org.vincentyeh.IMG2PDF.task.converter.xml.DocumentArgumentConverter;
-import org.vincentyeh.IMG2PDF.task.converter.xml.PageArgumentConverter;
+import org.vincentyeh.IMG2PDF.xStream.converter.DocumentArgumentConverter;
+import org.vincentyeh.IMG2PDF.xStream.converter.PageArgumentConverter;
 
 import java.util.List;
 

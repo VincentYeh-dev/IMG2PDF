@@ -1,6 +1,9 @@
-package org.vincentyeh.IMG2PDF.pdf.page;
+package org.vincentyeh.IMG2PDF.task;
 
 
+import org.vincentyeh.IMG2PDF.pdf.page.PageAlign;
+import org.vincentyeh.IMG2PDF.pdf.page.PageDirection;
+import org.vincentyeh.IMG2PDF.pdf.page.PageSize;
 
 public class PageArgument {
 
@@ -64,23 +67,4 @@ public class PageArgument {
         return auto_rotate;
     }
 
-//    public Element toElement() {
-//        Element element = new Element("PageArgument");
-//        element.addContent(new Element("size").addContent(size.toString()));
-//        element.addContent(new Element("align").addContent(align.toString()));
-//        element.addContent(new Element("default-direction").addContent(direction.toString()));
-//        element.addContent(new Element("auto-rotate").addContent(Boolean.toString(auto_rotate)));
-//        return element;
-//
-//    }
-
-    @Override
-    public String toString() {
-        return "PageArgument{" +
-                "align=" + align +
-                ", size=" + size +
-                ", direction=" + direction +
-                ", auto_rotate=" + auto_rotate +
-                '}';
-    }
 }

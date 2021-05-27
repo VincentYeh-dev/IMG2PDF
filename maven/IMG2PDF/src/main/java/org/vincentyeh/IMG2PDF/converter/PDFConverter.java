@@ -14,7 +14,6 @@ import org.vincentyeh.IMG2PDF.converter.listener.ConversionInfoListener;
 import org.vincentyeh.IMG2PDF.pdf.page.core.ImagePageFactory;
 import org.vincentyeh.IMG2PDF.task.Task;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
-//import org.vincentyeh.IMG2PDF.util.file.FileChecker;
 
 import javax.imageio.ImageIO;
 

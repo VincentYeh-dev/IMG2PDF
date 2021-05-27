@@ -1,4 +1,4 @@
-package org.vincentyeh.IMG2PDF.pdf.doc;
+package org.vincentyeh.IMG2PDF.task;
 
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
@@ -80,12 +80,4 @@ public class DocumentArgument {
         return ap;
     }
 
-    @Override
-    public String toString() {
-        return "DocumentArgument{" +
-                "owner_password='" + owner_password + '\'' +
-                ", user_password='" + user_password + '\'' +
-                ", ap=" + ap +
-                '}';
-    }
 }

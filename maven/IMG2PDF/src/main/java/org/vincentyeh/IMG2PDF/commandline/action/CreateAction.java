@@ -6,9 +6,9 @@ import java.util.*;
 
 import org.vincentyeh.IMG2PDF.SharedSpace;
 import org.vincentyeh.IMG2PDF.commandline.parser.core.HandledException;
-import org.vincentyeh.IMG2PDF.pdf.doc.DocumentArgument;
-import org.vincentyeh.IMG2PDF.pdf.page.PageArgument;
-import org.vincentyeh.IMG2PDF.task.converter.TaskListConverter;
+import org.vincentyeh.IMG2PDF.task.DocumentArgument;
+import org.vincentyeh.IMG2PDF.task.PageArgument;
+import org.vincentyeh.IMG2PDF.task.TaskListConverter;
 import org.vincentyeh.IMG2PDF.util.file.FileFilterHelper;
 import org.vincentyeh.IMG2PDF.task.Task;
 import org.vincentyeh.IMG2PDF.util.file.FileSorter;

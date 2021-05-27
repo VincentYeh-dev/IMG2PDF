@@ -1,4 +1,4 @@
-package org.vincentyeh.IMG2PDF.task.converter.xml;
+package org.vincentyeh.IMG2PDF.xStream.converter;
 
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -6,7 +6,7 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
-import org.vincentyeh.IMG2PDF.pdf.doc.DocumentArgument;
+import org.vincentyeh.IMG2PDF.task.DocumentArgument;
 
 import java.util.HashMap;
 import java.util.Map;
