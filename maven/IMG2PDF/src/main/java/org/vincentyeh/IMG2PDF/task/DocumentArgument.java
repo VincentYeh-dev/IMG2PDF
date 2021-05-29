@@ -1,7 +1,10 @@
 package org.vincentyeh.IMG2PDF.task;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
+import org.vincentyeh.IMG2PDF.xStream.converter.AccessPermissionConverter;
 
 public class DocumentArgument {
 
@@ -30,9 +33,12 @@ public class DocumentArgument {
         }
 
     }
-
+    @XStreamAlias("owner-password")
     private final String owner_password;
+    @XStreamAlias("user-password")
     private final String user_password;
+    @XStreamAlias("AccessPermission")
+    @XStreamConverter(AccessPermissionConverter.class)
     private final AccessPermission ap;
 
     private DocumentArgument(String owner_password, String user_password, AccessPermission ap) {

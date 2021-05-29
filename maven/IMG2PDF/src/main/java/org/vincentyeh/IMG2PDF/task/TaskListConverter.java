@@ -2,9 +2,6 @@ package org.vincentyeh.IMG2PDF.task;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import org.vincentyeh.IMG2PDF.task.Task;
-import org.vincentyeh.IMG2PDF.xStream.converter.DocumentArgumentConverter;
-import org.vincentyeh.IMG2PDF.xStream.converter.PageArgumentConverter;
 
 import java.util.List;
 
@@ -15,8 +12,8 @@ public class TaskListConverter {
     public TaskListConverter() {
         xStream = new XStream(new DomDriver());
         xStream.processAnnotations(Task.class);
-        xStream.registerConverter(new PageArgumentConverter());
-        xStream.registerConverter(new DocumentArgumentConverter());
+        xStream.processAnnotations(PageArgument.class);
+        xStream.processAnnotations(DocumentArgument.class);
         XStream.setupDefaultSecurity(xStream);
         xStream.allowTypesByWildcard(new String[] {
                 "org.vincentyeh.IMG2PDF.**"
@@ -29,7 +26,10 @@ public class TaskListConverter {
     }
 
     public List<Task> parse(String str) {
-        return (List<Task>) xStream.fromXML(str);
+        Object tasks=xStream.fromXML(str);
+        if (tasks instanceof List)
+            return (List<Task>) tasks;
+        else throw new RuntimeException("tasks is not a list.");
     }
 
 
