@@ -39,7 +39,7 @@ public class PageArgumentConverter implements Converter {
             elements.put(reader.getNodeName(),reader.getValue());
             reader.moveUp();
         }
-        builder.setAlign(new PageAlign(elements.get("align")));
+        builder.setAlign(PageAlign.valueOf(elements.get("align")));
         builder.setSize(PageSize.valueOf(elements.get("size")));
         builder.setDirection(PageDirection.valueOf(elements.get("direction")));
         builder.setAutoRotate(Boolean.parseBoolean(elements.get("auto-rotate")));

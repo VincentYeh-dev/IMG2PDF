@@ -117,7 +117,7 @@ public class CreateActionParser extends ActionParser<CreateAction> {
 
     private PageAlign getValueOfAlign(String value) throws HandledException {
         try {
-            return new PageAlign(value);
+            return PageAlign.valueOf(value);
         } catch (IllegalArgumentException e) {
 //            TODO:check
             System.err.printf(SharedSpace.getResString("public.err.unrecognizable_enum_long") + "\n", value, PageAlign.class.getSimpleName(), Arrays.toString(new String[]{""}));
