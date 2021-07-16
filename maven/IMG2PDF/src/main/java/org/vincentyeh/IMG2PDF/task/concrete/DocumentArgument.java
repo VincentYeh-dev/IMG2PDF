@@ -1,9 +1,8 @@
-package org.vincentyeh.IMG2PDF.task;
+package org.vincentyeh.IMG2PDF.task.concrete;
 
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
-import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 
-public class DocumentArgument {
+public class DocumentArgument implements org.vincentyeh.IMG2PDF.task.framework.DocumentArgument {
 
     public static class Builder {
         private String owner_password;
@@ -40,30 +39,19 @@ public class DocumentArgument {
         this.ap = ap;
     }
 
-    public StandardProtectionPolicy getSpp() {
-        return createProtectionPolicy(owner_password, user_password, ap);
-    }
 
-    private StandardProtectionPolicy createProtectionPolicy(String owner_pwd, String user_pwd, AccessPermission ap) {
-
-        // Define the length of the encryption key.
-        // Possible values are 40 or 128 (256 will be available in PDFBox 2.0).
-        int keyLength = 128;
-        StandardProtectionPolicy spp = new StandardProtectionPolicy(owner_pwd, user_pwd, ap);
-        spp.setEncryptionKeyLength(keyLength);
-        return spp;
-    }
-
-    public String getOwner_password() {
+    @Override
+    public String getOwnerPassword() {
         return owner_password;
     }
 
-    public String getUser_password() {
+    @Override
+    public String getUserPassword() {
         return user_password;
     }
 
-    public AccessPermission getAp() {
+    @Override
+    public AccessPermission getAccessPermission() {
         return ap;
     }
-
 }

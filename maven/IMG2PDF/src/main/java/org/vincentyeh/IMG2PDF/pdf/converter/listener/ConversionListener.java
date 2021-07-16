@@ -1,6 +1,6 @@
 package org.vincentyeh.IMG2PDF.pdf.converter.listener;
 
-import org.vincentyeh.IMG2PDF.task.Task;
+import org.vincentyeh.IMG2PDF.task.framework.Task;
 
 import java.io.File;
 

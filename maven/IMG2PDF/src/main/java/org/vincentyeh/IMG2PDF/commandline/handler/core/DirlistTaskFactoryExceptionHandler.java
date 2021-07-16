@@ -2,10 +2,10 @@ package org.vincentyeh.IMG2PDF.commandline.handler.core;
 
 import org.vincentyeh.IMG2PDF.commandline.handler.FileExceptionHandler;
 import org.vincentyeh.IMG2PDF.pattern.Handler;
-import org.vincentyeh.IMG2PDF.task.factory.exception.DirListException;
-import org.vincentyeh.IMG2PDF.task.factory.exception.DirlistTaskFactoryException;
-import org.vincentyeh.IMG2PDF.task.factory.exception.EmptyImagesException;
-import org.vincentyeh.IMG2PDF.task.factory.exception.SourceFileException;
+import org.vincentyeh.IMG2PDF.task.concrete.exception.TextTaskFactoryException;
+import org.vincentyeh.IMG2PDF.task.concrete.exception.EmptyImagesException;
+import org.vincentyeh.IMG2PDF.task.concrete.exception.TextFileException;
+import org.vincentyeh.IMG2PDF.task.concrete.factory.TextFileTaskTemplateTemplateFactory;
 import org.vincentyeh.IMG2PDF.util.file.FileNameFormatter;
 import org.vincentyeh.IMG2PDF.util.file.exception.FileException;
 
@@ -19,13 +19,13 @@ public class DirlistTaskFactoryExceptionHandler extends ExceptionHandler {
 
     @Override
     public String handle(Exception data) throws CantHandleException {
-        if (data instanceof DirlistTaskFactoryException) {
-            if (data instanceof DirListException) {
+        if (data instanceof TextTaskFactoryException) {
+            if (data instanceof TextFileException) {
                 return "In dirlist : " + ((ExceptionHandler) new FileExceptionHandler(null)).handle((Exception) data.getCause());
             }
 
-            if (data instanceof SourceFileException) {
-                SourceFileException ex1 = (SourceFileException) data;
+            if (data instanceof TextFileTaskTemplateTemplateFactory.TextLineException) {
+                TextFileTaskTemplateTemplateFactory.TextLineException ex1 = (TextFileTaskTemplateTemplateFactory.TextLineException) data;
                 if (data.getCause() instanceof FileException) {
                     return targetLine(ex1.getLine(), ((ExceptionHandler) new FileExceptionHandler(null)).handle((Exception) data.getCause()));
                 } else if (ex1.getCause() instanceof EmptyImagesException) {

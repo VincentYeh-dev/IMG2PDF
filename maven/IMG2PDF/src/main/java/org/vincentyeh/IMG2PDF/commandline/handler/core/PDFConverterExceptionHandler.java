@@ -7,7 +7,7 @@ import org.vincentyeh.IMG2PDF.pdf.converter.exception.PDFConversionException;
 import org.vincentyeh.IMG2PDF.pdf.converter.exception.PDFConverterException;
 import org.vincentyeh.IMG2PDF.pdf.converter.exception.ReadImageException;
 import org.vincentyeh.IMG2PDF.pdf.converter.exception.SaveException;
-import org.vincentyeh.IMG2PDF.task.Task;
+import org.vincentyeh.IMG2PDF.task.framework.Task;
 import org.vincentyeh.IMG2PDF.util.file.exception.FileException;
 
 import static java.lang.String.format;

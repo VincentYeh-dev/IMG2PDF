@@ -1,6 +1,6 @@
 package org.vincentyeh.IMG2PDF.pdf.converter.exception;
 
-import org.vincentyeh.IMG2PDF.task.Task;
+import org.vincentyeh.IMG2PDF.task.framework.Task;
 
 public class PDFConverterException extends Exception{
     protected final Task task;

@@ -3,13 +3,15 @@ package org.vincentyeh.IMG2PDF.pdf.converter;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 import org.vincentyeh.IMG2PDF.pdf.converter.core.ImagePageFactory;
 import org.vincentyeh.IMG2PDF.pdf.converter.exception.PDFConversionException;
 import org.vincentyeh.IMG2PDF.pdf.converter.exception.PDFConverterException;
 import org.vincentyeh.IMG2PDF.pdf.converter.exception.ReadImageException;
 import org.vincentyeh.IMG2PDF.pdf.converter.exception.SaveException;
 import org.vincentyeh.IMG2PDF.pdf.converter.listener.ConversionListener;
-import org.vincentyeh.IMG2PDF.task.Task;
+import org.vincentyeh.IMG2PDF.task.framework.DocumentArgument;
+import org.vincentyeh.IMG2PDF.task.framework.Task;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
 import org.vincentyeh.IMG2PDF.util.file.exception.OverwriteException;
 
@@ -53,10 +55,10 @@ public class PDFConverter implements ConversionListener {
 
         try (PDDocument document = new PDDocument(memoryUsageSetting)) {
             checkOverwrite(task.getPdfDestination());
-            document.protect(task.getDocumentArgument().getSpp());
+            document.protect(createProtectionPolicy(task.getDocumentArgument()));
 
             File[] images = task.getImages();
-            appendAllPageToDocument(task,images, document);
+            appendAllPageToDocument(task, images, document);
             File pdf = savePDF(document, task.getPdfDestination());
             onConversionComplete();
             return pdf;
@@ -78,17 +80,17 @@ public class PDFConverter implements ConversionListener {
         }
     }
 
-    private void appendAllPageToDocument(Task task,File[] images, PDDocument document) throws PDFConversionException, ReadImageException {
+    private void appendAllPageToDocument(Task task, File[] images, PDDocument document) throws PDFConversionException, ReadImageException {
         for (int i = 0; i < images.length; i++) {
             onConverting(i, images[i]);
-            appendPageToDocument(task,images[i], document);
+            appendPageToDocument(task, images[i], document);
         }
     }
 
-    private void appendPageToDocument(Task task,File file, PDDocument document) throws PDFConversionException, ReadImageException {
+    private void appendPageToDocument(Task task, File file, PDDocument document) throws PDFConversionException, ReadImageException {
         BufferedImage image = readImage(file);
         try {
-            document.addPage(getImagePage(task,image, document));
+            document.addPage(getImagePage(task, image, document));
         } catch (Exception e) {
             throw new PDFConversionException(e);
         }
@@ -122,12 +124,22 @@ public class PDFConverter implements ConversionListener {
 
     private PDPage getImagePage(Task task, BufferedImage image, PDDocument document) throws Exception {
         ImagePageFactory.Builder builder = new ImagePageFactory.Builder();
-        builder.setAutoRotate(task.getPageArgument().getAutoRotate());
+        builder.setAutoRotate(task.getPageArgument().autoRotate());
         builder.setDirection(task.getPageArgument().getDirection());
         builder.setSize(task.getPageArgument().getSize());
         builder.setAlign(task.getPageArgument().getAlign());
 
         return builder.build().getImagePage(document, image);
+    }
+
+    private StandardProtectionPolicy createProtectionPolicy(DocumentArgument spec) {
+
+        // Define the length of the encryption key.
+        // Possible values are 40 or 128 (256 will be available in PDFBox 2.0).
+        int keyLength = 128;
+        StandardProtectionPolicy spp = new StandardProtectionPolicy(spec.getOwnerPassword(), spec.getUserPassword(), spec.getAccessPermission());
+        spp.setEncryptionKeyLength(keyLength);
+        return spp;
     }
 
     public void setListener(ConversionListener listener) {

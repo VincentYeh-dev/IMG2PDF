@@ -1,11 +1,11 @@
-package org.vincentyeh.IMG2PDF.task;
+package org.vincentyeh.IMG2PDF.task.concrete;
 
 
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageAlign;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageSize;
 
-public class PageArgument {
+public class PageArgument implements org.vincentyeh.IMG2PDF.task.framework.PageArgument {
     public static class Builder {
         private PageAlign align;
         private PageSize size;
@@ -49,20 +49,23 @@ public class PageArgument {
         this.auto_rotate = auto_rotate;
     }
 
+    @Override
     public PageAlign getAlign() {
         return align;
     }
 
+    @Override
     public PageDirection getDirection() {
         return direction;
     }
 
-    public PageSize getSize() {
-        return size;
-    }
-
-    public boolean getAutoRotate() {
+    @Override
+    public boolean autoRotate() {
         return auto_rotate;
     }
 
+    @Override
+    public PageSize getSize() {
+        return size;
+    }
 }

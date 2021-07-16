@@ -13,10 +13,12 @@ import org.vincentyeh.IMG2PDF.pdf.converter.listener.DefaultConversionListener;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageAlign;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageSize;
-import org.vincentyeh.IMG2PDF.task.DocumentArgument;
-import org.vincentyeh.IMG2PDF.task.PageArgument;
-import org.vincentyeh.IMG2PDF.task.Task;
-import org.vincentyeh.IMG2PDF.task.factory.DirlistTaskFactory;
+import org.vincentyeh.IMG2PDF.task.concrete.DocumentArgument;
+import org.vincentyeh.IMG2PDF.task.concrete.PageArgument;
+import org.vincentyeh.IMG2PDF.task.concrete.factory.TextFileTaskTemplateTemplateFactory;
+import org.vincentyeh.IMG2PDF.task.concrete.factory.TextTaskFactory;
+import org.vincentyeh.IMG2PDF.task.framework.Task;
+import org.vincentyeh.IMG2PDF.task.framework.factory.TaskFactory;
 import org.vincentyeh.IMG2PDF.util.BytesSize;
 import org.vincentyeh.IMG2PDF.util.file.FileNameFormatter;
 import org.vincentyeh.IMG2PDF.util.file.FileSorter;
@@ -28,8 +30,10 @@ import java.awt.*;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.*;
+import java.util.Locale;
 import java.util.concurrent.Callable;
 
 import static org.vincentyeh.IMG2PDF.util.PrinterUtils.*;
@@ -94,8 +98,9 @@ public class ConvertCommand implements Callable<Integer> {
 
     private final Configuration configuration;
 
-    public interface Configuration{
+    public interface Configuration {
         Charset getDirectoryListCharset();
+
         Locale getLocale();
     }
 
@@ -108,6 +113,7 @@ public class ConvertCommand implements Callable<Integer> {
         try {
             checkParameters();
             List<Task> tasks = importAllTaskFromDirlists();
+
             printLine(getResourceBundleString("execution.convert.start.start_conversion"));
 
             convertAllToFile(tasks);
@@ -120,14 +126,17 @@ public class ConvertCommand implements Callable<Integer> {
     }
 
     private List<Task> importAllTaskFromDirlists() {
-        DirlistTaskFactory.setArgument(getDocumentArgument(), getPageArgument(), new FileNameFormatter(pdf_dst));
-        DirlistTaskFactory.setImageFilesRule(filter, fileSorter);
+
+        TaskFactory factory = new TextTaskFactory(filter, fileSorter, new FileNameFormatter(pdf_dst), getPageArgument(), getDocumentArgument());
+
         List<Task> tasks = new ArrayList<>();
         for (File dirlist : sourceFiles) {
             try {
-                printColorFormat(getResourceBundleString("execution.convert.start.parsing")+"\n", Ansi.Color.BLUE, dirlist.getPath());
-                List<Task> found = DirlistTaskFactory.createFromDirlist(dirlist, configuration.getDirectoryListCharset());
-                printColorFormat(getResourceBundleString("execution.convert.start.parsed")+"\n", Ansi.Color.BLUE, found.size(), dirlist.getPath());
+                printColorFormat(getResourceBundleString("execution.convert.start.parsing") + "\n", Ansi.Color.BLUE, dirlist.getPath());
+                List<Task> found = new TextFileTaskTemplateTemplateFactory(factory,dirlist,configuration.getDirectoryListCharset()).create();
+
+                printColorFormat(getResourceBundleString("execution.convert.start.parsed") + "\n", Ansi.Color.BLUE, found.size(), dirlist.getPath());
+
                 tasks.addAll(found);
             } catch (Exception e) {
                 handleException(e, new DirlistTaskFactoryExceptionHandler(null), "\t", "");
@@ -284,7 +293,7 @@ public class ConvertCommand implements Callable<Integer> {
         return (field.get(this) != null);
     }
 
-    private String getResourceBundleString(String key){
+    private String getResourceBundleString(String key) {
         return spec.resourceBundle().getString(key);
     }
 }

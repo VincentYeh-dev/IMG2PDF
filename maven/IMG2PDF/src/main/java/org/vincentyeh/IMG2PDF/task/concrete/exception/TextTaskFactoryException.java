@@ -1,0 +1,12 @@
+package org.vincentyeh.IMG2PDF.task.concrete.exception;
+
+public abstract class TextTaskFactoryException extends RuntimeException{
+    public TextTaskFactoryException(String message) {
+        super(message);
+    }
+
+    public TextTaskFactoryException(Throwable cause) {
+        super(cause);
+    }
+
+}
