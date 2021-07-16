@@ -2,18 +2,18 @@ package org.vincentyeh.IMG2PDF.commandline.handler.core;
 
 import org.vincentyeh.IMG2PDF.commandline.handler.FileExceptionHandler;
 import org.vincentyeh.IMG2PDF.pattern.Handler;
-import org.vincentyeh.IMG2PDF.task.concrete.exception.TextTaskFactoryException;
 import org.vincentyeh.IMG2PDF.task.concrete.exception.EmptyImagesException;
 import org.vincentyeh.IMG2PDF.task.concrete.exception.TextFileException;
-import org.vincentyeh.IMG2PDF.task.concrete.factory.TextFileTaskTemplateTemplateFactory;
+import org.vincentyeh.IMG2PDF.task.concrete.exception.TextTaskFactoryException;
+import org.vincentyeh.IMG2PDF.task.concrete.factory.TextFileTaskListFactory;
 import org.vincentyeh.IMG2PDF.util.file.FileNameFormatter;
 import org.vincentyeh.IMG2PDF.util.file.exception.FileException;
 
 import static java.lang.String.format;
 
-public class DirlistTaskFactoryExceptionHandler extends ExceptionHandler {
+public class TextFileTaskFactoryExceptionHandler extends ExceptionHandler {
 
-    public DirlistTaskFactoryExceptionHandler(Handler<String, Exception> next) {
+    public TextFileTaskFactoryExceptionHandler(Handler<String, Exception> next) {
         super(next, "dirlist_task_factory");
     }
 
@@ -24,8 +24,8 @@ public class DirlistTaskFactoryExceptionHandler extends ExceptionHandler {
                 return "In dirlist : " + ((ExceptionHandler) new FileExceptionHandler(null)).handle((Exception) data.getCause());
             }
 
-            if (data instanceof TextFileTaskTemplateTemplateFactory.TextLineException) {
-                TextFileTaskTemplateTemplateFactory.TextLineException ex1 = (TextFileTaskTemplateTemplateFactory.TextLineException) data;
+            if (data instanceof TextFileTaskListFactory.TextLineException) {
+                TextFileTaskListFactory.TextLineException ex1 = (TextFileTaskListFactory.TextLineException) data;
                 if (data.getCause() instanceof FileException) {
                     return targetLine(ex1.getLine(), ((ExceptionHandler) new FileExceptionHandler(null)).handle((Exception) data.getCause()));
                 } else if (ex1.getCause() instanceof EmptyImagesException) {
@@ -35,6 +35,7 @@ public class DirlistTaskFactoryExceptionHandler extends ExceptionHandler {
                     return targetLine(ex1.getLine(),format(getLocaleString("source.no_map_pattern"), ex1.getSource(), ex2.getPattern()));
                 }
             }
+
 
         }
 

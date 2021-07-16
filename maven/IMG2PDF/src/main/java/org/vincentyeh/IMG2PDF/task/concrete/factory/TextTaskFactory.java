@@ -1,8 +1,9 @@
 package org.vincentyeh.IMG2PDF.task.concrete.factory;
 
-import org.vincentyeh.IMG2PDF.task.concrete.exception.TextException;
 import org.vincentyeh.IMG2PDF.task.concrete.exception.EmptyImagesException;
-import org.vincentyeh.IMG2PDF.task.framework.*;
+import org.vincentyeh.IMG2PDF.task.framework.DocumentArgument;
+import org.vincentyeh.IMG2PDF.task.framework.PageArgument;
+import org.vincentyeh.IMG2PDF.task.framework.Task;
 import org.vincentyeh.IMG2PDF.task.framework.factory.TaskFactory;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
 import org.vincentyeh.IMG2PDF.util.file.exception.WrongFileTypeException;
@@ -30,19 +31,14 @@ public class TextTaskFactory implements TaskFactory {
 
 
     @Override
-    public Task create(Object... objects) {
+    public Task create(Object... objects) throws Exception {
         File source = (File) objects[0];
-        try {
-            FileUtils.checkExists(source);
-            FileUtils.checkType(source, WrongFileTypeException.Type.FOLDER);
+        FileUtils.checkExists(source);
+        FileUtils.checkType(source, WrongFileTypeException.Type.FOLDER);
 
-            return createTask(
-                    importSortedImagesFiles(source),
-                    new File(formatter.format(source)).getAbsoluteFile());
-
-        } catch (Exception e) {
-            throw new TextException(e,source);
-        }
+        return createTask(
+                importSortedImagesFiles(source),
+                new File(formatter.format(source)).getAbsoluteFile());
     }
 
 

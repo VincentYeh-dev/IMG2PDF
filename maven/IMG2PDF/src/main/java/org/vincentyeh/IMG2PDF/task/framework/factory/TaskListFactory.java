@@ -2,6 +2,8 @@ package org.vincentyeh.IMG2PDF.task.framework.factory;
 
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 
-public interface TaskFactory {
-    Task create(Object... objects) throws Exception;
+import java.util.List;
+
+public interface TaskListFactory {
+    List<Task> create() throws Exception;
 }

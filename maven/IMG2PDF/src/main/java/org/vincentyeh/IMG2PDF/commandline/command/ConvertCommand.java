@@ -3,7 +3,7 @@ package org.vincentyeh.IMG2PDF.commandline.command;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.fusesource.jansi.Ansi;
 import org.vincentyeh.IMG2PDF.commandline.converter.*;
-import org.vincentyeh.IMG2PDF.commandline.handler.core.DirlistTaskFactoryExceptionHandler;
+import org.vincentyeh.IMG2PDF.commandline.handler.core.TextFileTaskFactoryExceptionHandler;
 import org.vincentyeh.IMG2PDF.commandline.handler.core.ExceptionHandler;
 import org.vincentyeh.IMG2PDF.commandline.handler.core.PDFConverterExceptionHandler;
 import org.vincentyeh.IMG2PDF.pattern.Handler;
@@ -15,7 +15,7 @@ import org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageSize;
 import org.vincentyeh.IMG2PDF.task.concrete.DocumentArgument;
 import org.vincentyeh.IMG2PDF.task.concrete.PageArgument;
-import org.vincentyeh.IMG2PDF.task.concrete.factory.TextFileTaskTemplateTemplateFactory;
+import org.vincentyeh.IMG2PDF.task.concrete.factory.TextFileTaskListFactory;
 import org.vincentyeh.IMG2PDF.task.concrete.factory.TextTaskFactory;
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 import org.vincentyeh.IMG2PDF.task.framework.factory.TaskFactory;
@@ -133,13 +133,13 @@ public class ConvertCommand implements Callable<Integer> {
         for (File dirlist : sourceFiles) {
             try {
                 printColorFormat(getResourceBundleString("execution.convert.start.parsing") + "\n", Ansi.Color.BLUE, dirlist.getPath());
-                List<Task> found = new TextFileTaskTemplateTemplateFactory(factory,dirlist,configuration.getDirectoryListCharset()).create();
+                List<Task> found = new TextFileTaskListFactory(factory,dirlist,configuration.getDirectoryListCharset()).create();
 
                 printColorFormat(getResourceBundleString("execution.convert.start.parsed") + "\n", Ansi.Color.BLUE, found.size(), dirlist.getPath());
 
                 tasks.addAll(found);
             } catch (Exception e) {
-                handleException(e, new DirlistTaskFactoryExceptionHandler(null), "\t", "");
+                handleException(e, new TextFileTaskFactoryExceptionHandler(null), "\t", "");
             }
         }
         return tasks;
