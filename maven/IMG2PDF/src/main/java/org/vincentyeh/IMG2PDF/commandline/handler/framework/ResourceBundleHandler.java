@@ -1,18 +1,21 @@
-package org.vincentyeh.IMG2PDF.commandline.handler.core;
+package org.vincentyeh.IMG2PDF.commandline.handler.framework;
 
-import org.vincentyeh.IMG2PDF.pattern.Handler;
+
 import org.vincentyeh.IMG2PDF.util.file.exception.WrongFileTypeException;
 
 import java.util.ResourceBundle;
 
-public abstract class ResourceBundleHandler<R> extends Handler<String, R> {
-    private static ResourceBundle resourceBundle;
+public abstract class ResourceBundleHandler<DATA> extends Handler<String,DATA> {
 
+    private final ResourceBundle resourceBundle;
     private final String tag;
-    public ResourceBundleHandler(Handler<String, R> next, String tag) {
+
+    public ResourceBundleHandler(Handler<String, DATA> next, String tag, ResourceBundle resourceBundle) {
         super(next);
+        this.resourceBundle = resourceBundle;
         this.tag = tag;
     }
+
 
     protected String getPublicString(String key){
         return resourceBundle.getString("public."+key);
@@ -26,7 +29,7 @@ public abstract class ResourceBundleHandler<R> extends Handler<String, R> {
         return resourceBundle.getString("handler."+tag+"."+key);
     }
 
-    public static void setResourceBundle(ResourceBundle resourceBundle) {
-        ResourceBundleHandler.resourceBundle = resourceBundle;
+    public ResourceBundle getResourceBundle() {
+        return resourceBundle;
     }
 }

@@ -3,10 +3,9 @@ package org.vincentyeh.IMG2PDF.commandline.command;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.fusesource.jansi.Ansi;
 import org.vincentyeh.IMG2PDF.commandline.converter.*;
-import org.vincentyeh.IMG2PDF.commandline.handler.core.TextFileTaskFactoryExceptionHandler;
-import org.vincentyeh.IMG2PDF.commandline.handler.core.ExceptionHandler;
-import org.vincentyeh.IMG2PDF.commandline.handler.core.PDFConverterExceptionHandler;
-import org.vincentyeh.IMG2PDF.pattern.Handler;
+import org.vincentyeh.IMG2PDF.commandline.handler.framework.ExceptionHandler;
+import org.vincentyeh.IMG2PDF.commandline.handler.concrete.ExceptionHandlerFactory;
+import org.vincentyeh.IMG2PDF.commandline.handler.framework.CantHandleException;
 import org.vincentyeh.IMG2PDF.pdf.converter.PDFConverter;
 import org.vincentyeh.IMG2PDF.pdf.converter.exception.PDFConverterException;
 import org.vincentyeh.IMG2PDF.pdf.converter.listener.DefaultConversionListener;
@@ -139,7 +138,7 @@ public class ConvertCommand implements Callable<Integer> {
 
                 tasks.addAll(found);
             } catch (Exception e) {
-                handleException(e, new TextFileTaskFactoryExceptionHandler(null), "\t", "");
+                handleException(e, ExceptionHandlerFactory.getTextFileTaskFactoryExceptionHandler(null), "\t", "");
             }
         }
         return tasks;
@@ -237,7 +236,7 @@ public class ConvertCommand implements Callable<Integer> {
         try {
             return converter.start(task);
         } catch (PDFConverterException e) {
-            handleException(e, new PDFConverterExceptionHandler(null), "\t", "");
+            handleException(e, ExceptionHandlerFactory.getPDFConverterExceptionHandler(null), "\t", "");
         } catch (Exception e) {
             printStackTrance(e);
         }
@@ -249,7 +248,7 @@ public class ConvertCommand implements Callable<Integer> {
             printRenderFormat(prefix + "[@|red ERROR|@] %s\n" + suffix, handler.handle(e));
             if (img2PDFCommand.isDebug())
                 printStackTrance(e);
-        } catch (Handler.CantHandleException cantHandleException) {
+        } catch (CantHandleException cantHandleException) {
             printColor("Can't handle.\n", Ansi.Color.RED);
             printStackTrance(e);
         }

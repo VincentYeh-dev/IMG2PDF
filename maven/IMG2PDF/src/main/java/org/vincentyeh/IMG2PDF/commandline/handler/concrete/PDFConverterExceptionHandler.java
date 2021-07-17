@@ -1,8 +1,10 @@
-package org.vincentyeh.IMG2PDF.commandline.handler.core;
+package org.vincentyeh.IMG2PDF.commandline.handler.concrete;
 
 
-import org.vincentyeh.IMG2PDF.commandline.handler.FileExceptionHandler;
-import org.vincentyeh.IMG2PDF.pattern.Handler;
+import org.vincentyeh.IMG2PDF.commandline.handler.framework.ExceptionHandler;
+import org.vincentyeh.IMG2PDF.commandline.handler.concrete.core.FileExceptionHandler;
+import org.vincentyeh.IMG2PDF.commandline.handler.framework.CantHandleException;
+import org.vincentyeh.IMG2PDF.commandline.handler.framework.Handler;
 import org.vincentyeh.IMG2PDF.pdf.converter.exception.PDFConversionException;
 import org.vincentyeh.IMG2PDF.pdf.converter.exception.PDFConverterException;
 import org.vincentyeh.IMG2PDF.pdf.converter.exception.ReadImageException;
@@ -10,12 +12,14 @@ import org.vincentyeh.IMG2PDF.pdf.converter.exception.SaveException;
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 import org.vincentyeh.IMG2PDF.util.file.exception.FileException;
 
+import java.util.ResourceBundle;
+
 import static java.lang.String.format;
 
-public class PDFConverterExceptionHandler extends ExceptionHandler {
+class PDFConverterExceptionHandler extends ExceptionHandler {
 
-    public PDFConverterExceptionHandler(Handler<String, Exception> next) {
-        super(next, "conversion");
+    public PDFConverterExceptionHandler(Handler<String, Exception> next, ResourceBundle resourceBundle) {
+        super(next, "conversion",resourceBundle);
     }
 
     @Override
@@ -39,7 +43,7 @@ public class PDFConverterExceptionHandler extends ExceptionHandler {
     }
 
     private String handleFileException(FileException e) throws CantHandleException {
-        return ((ExceptionHandler) new FileExceptionHandler(null)).handle(e);
+        return ((ExceptionHandler) new FileExceptionHandler(null,getResourceBundle())).handle(e);
     }
 
     private String handleReadImageException(ReadImageException e, Task task) throws CantHandleException {

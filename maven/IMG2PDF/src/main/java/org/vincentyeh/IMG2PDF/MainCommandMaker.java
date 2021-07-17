@@ -3,7 +3,7 @@ package org.vincentyeh.IMG2PDF;
 import org.vincentyeh.IMG2PDF.commandline.command.ConvertCommand;
 import org.vincentyeh.IMG2PDF.commandline.command.IMG2PDFCommand;
 import org.vincentyeh.IMG2PDF.commandline.handler.CommandLineParameterHandlerAdaptor;
-import org.vincentyeh.IMG2PDF.commandline.handler.core.ResourceBundleHandler;
+import org.vincentyeh.IMG2PDF.commandline.handler.concrete.ExceptionHandlerFactory;
 import org.vincentyeh.IMG2PDF.configuration.Configuration;
 import org.vincentyeh.IMG2PDF.configuration.ConvertConfigurationAdaptor;
 import picocli.CommandLine;
@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 
 class MainCommandMaker {
     public static CommandLine make(Configuration configuration) {
-        ResourceBundleHandler.setResourceBundle(ResourceBundle.getBundle("handler", configuration.getLocale()));
+        ExceptionHandlerFactory.setResourceBundle(ResourceBundle.getBundle("handler", configuration.getLocale()));
 
         final CommandLine cmd = new CommandLine(new IMG2PDFCommand());
         cmd.setResourceBundle(ResourceBundle.getBundle("cmd", configuration.getLocale()));

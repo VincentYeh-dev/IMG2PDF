@@ -1,18 +1,21 @@
-package org.vincentyeh.IMG2PDF.commandline.handler.core;
+package org.vincentyeh.IMG2PDF.commandline.handler.concrete;
 
-import org.vincentyeh.IMG2PDF.pattern.Handler;
+import org.vincentyeh.IMG2PDF.commandline.handler.framework.ExceptionHandler;
+import org.vincentyeh.IMG2PDF.commandline.handler.framework.CantHandleException;
+import org.vincentyeh.IMG2PDF.commandline.handler.framework.Handler;
 import picocli.CommandLine;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
-public class ParameterExceptionHandler extends ExceptionHandler {
+class ParameterExceptionHandler extends ExceptionHandler {
 
-    public ParameterExceptionHandler(Handler<String, Exception> next) {
-        super(next, "parameter");
+    public ParameterExceptionHandler(Handler<String, Exception> next, ResourceBundle resourceBundle) {
+        super(next, "parameter",resourceBundle);
     }
 
     @Override
