@@ -6,8 +6,8 @@ import org.vincentyeh.IMG2PDF.commandline.handler.framework.ExceptionHandler;
 import org.vincentyeh.IMG2PDF.commandline.handler.framework.Handler;
 import org.vincentyeh.IMG2PDF.task.concrete.exception.EmptyImagesException;
 import org.vincentyeh.IMG2PDF.task.concrete.exception.TextFileException;
+import org.vincentyeh.IMG2PDF.task.concrete.exception.TextLineException;
 import org.vincentyeh.IMG2PDF.task.concrete.exception.TextTaskFactoryException;
-import org.vincentyeh.IMG2PDF.task.concrete.factory.TextFileFactory;
 import org.vincentyeh.IMG2PDF.util.file.FileNameFormatter;
 import org.vincentyeh.IMG2PDF.util.file.exception.FileException;
 
@@ -28,8 +28,8 @@ class TextFileTaskFactoryExceptionHandler extends ExceptionHandler {
                 return "In dirlist : " + ((ExceptionHandler) new FileExceptionHandler(null,getResourceBundle())).handle((Exception) data.getCause());
             }
 
-            if (data instanceof TextFileFactory.TextLineException) {
-                TextFileFactory.TextLineException ex1 = (TextFileFactory.TextLineException) data;
+            if (data instanceof TextLineException) {
+                TextLineException ex1 = (TextLineException) data;
                 if (data.getCause() instanceof FileException) {
                     return targetLine(ex1.getLine(), ((ExceptionHandler) new FileExceptionHandler(null,getResourceBundle())).handle((Exception) data.getCause()));
                 } else if (ex1.getCause() instanceof EmptyImagesException) {

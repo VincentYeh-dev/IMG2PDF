@@ -1,7 +1,7 @@
 package org.vincentyeh.IMG2PDF.task.concrete.factory;
 
-import org.vincentyeh.IMG2PDF.task.concrete.exception.TextException;
 import org.vincentyeh.IMG2PDF.task.concrete.exception.TextFileException;
+import org.vincentyeh.IMG2PDF.task.concrete.exception.TextLineException;
 import org.vincentyeh.IMG2PDF.task.framework.DocumentArgument;
 import org.vincentyeh.IMG2PDF.task.framework.PageArgument;
 import org.vincentyeh.IMG2PDF.task.framework.factory.TaskFactoryBridge;
@@ -53,7 +53,7 @@ public class TextFileFactory extends TaskListFactory {
                 else
                     result = raw;
 
-                modules.add(new StandardTaskFactoryBridge(pageArgument, documentArgument, result, imageFilter, fileSorter, formatter));
+                modules.add(new TextTaskFactoryBridge(pageArgument, documentArgument, result, imageFilter, fileSorter, formatter));
             } catch (Exception e) {
                 throw new TextLineException(e, dirlist, index + 1);
             }
@@ -96,17 +96,4 @@ public class TextFileFactory extends TaskListFactory {
     }
 
 
-    public static class TextLineException extends TextException {
-
-        private final int line;
-
-        public TextLineException(Throwable cause, File source, int line) {
-            super(cause, source);
-            this.line = line;
-        }
-
-        public int getLine() {
-            return line;
-        }
-    }
 }

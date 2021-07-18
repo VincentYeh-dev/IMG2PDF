@@ -9,7 +9,7 @@ import java.io.File;
 
 class TaskFactory {
 
-    public final Task create(TaskFactoryBridge bridge) {
+    public static Task create(TaskFactoryBridge bridge) {
         return new Task() {
             @Override
             public DocumentArgument getDocumentArgument() {

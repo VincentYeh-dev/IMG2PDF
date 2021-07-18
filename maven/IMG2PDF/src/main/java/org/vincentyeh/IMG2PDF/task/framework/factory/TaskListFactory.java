@@ -11,7 +11,7 @@ public abstract class TaskListFactory {
     public final List<Task> create() throws Exception {
         List<Task> tasks = new ArrayList<>();
         for (TaskFactoryBridge bridge : generateList()) {
-            tasks.add(new TaskFactory().create(bridge));
+            tasks.add(TaskFactory.create(bridge));
         }
 
         return tasks;
