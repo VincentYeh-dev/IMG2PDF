@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class TextTaskFactoryBridge extends StandardTaskFactoryBridge{
-    public TextTaskFactoryBridge(PageArgument argument, DocumentArgument argument1, File source, FileFilter filter, Comparator<? super File> sorter, NameFormatter<File> formatter) throws EmptyImagesException, IOException, NameFormatter.FormatException{
+public class TextTaskFactory extends StandardTaskFactory {
+    public TextTaskFactory(PageArgument argument, DocumentArgument argument1, File source, FileFilter filter, Comparator<? super File> sorter, NameFormatter<File> formatter) throws EmptyImagesException, IOException, NameFormatter.FormatException{
         super(argument, argument1,importSortedImagesFiles(source,filter,sorter),new File(formatter.format(source)).getAbsoluteFile());
     }
 

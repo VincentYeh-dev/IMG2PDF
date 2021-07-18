@@ -6,14 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class TaskListFactory {
-    protected abstract List<TaskFactoryBridge> generateList() throws Exception;
+    protected abstract List<TaskFactory> generateList() throws Exception;
 
     public final List<Task> create() throws Exception {
         List<Task> tasks = new ArrayList<>();
-        for (TaskFactoryBridge bridge : generateList()) {
-            tasks.add(TaskFactory.create(bridge));
+        for (TaskFactory factory : generateList()) {
+            tasks.add(factory.create());
         }
-
         return tasks;
     }
 }

@@ -4,7 +4,7 @@ import org.vincentyeh.IMG2PDF.task.concrete.exception.TextFileException;
 import org.vincentyeh.IMG2PDF.task.concrete.exception.TextLineException;
 import org.vincentyeh.IMG2PDF.task.framework.DocumentArgument;
 import org.vincentyeh.IMG2PDF.task.framework.PageArgument;
-import org.vincentyeh.IMG2PDF.task.framework.factory.TaskFactoryBridge;
+import org.vincentyeh.IMG2PDF.task.framework.factory.TaskFactory;
 import org.vincentyeh.IMG2PDF.task.framework.factory.TaskListFactory;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
 import org.vincentyeh.IMG2PDF.util.file.exception.WrongFileTypeException;
@@ -39,8 +39,8 @@ public class TextFileFactory extends TaskListFactory {
     }
 
     @Override
-    protected List<TaskFactoryBridge> generateList() throws Exception {
-        List<TaskFactoryBridge> modules = new ArrayList<>();
+    protected List<TaskFactory> generateList() throws Exception {
+        List<TaskFactory> modules = new ArrayList<>();
 
         List<String> lines = readAllLines(dirlist, charset);
         for (int index = 0; index < lines.size(); index++) {
@@ -53,7 +53,7 @@ public class TextFileFactory extends TaskListFactory {
                 else
                     result = raw;
 
-                modules.add(new TextTaskFactoryBridge(pageArgument, documentArgument, result, imageFilter, fileSorter, formatter));
+                modules.add(new TextTaskFactory(pageArgument, documentArgument, result, imageFilter, fileSorter, formatter));
             } catch (Exception e) {
                 throw new TextLineException(e, dirlist, index + 1);
             }
