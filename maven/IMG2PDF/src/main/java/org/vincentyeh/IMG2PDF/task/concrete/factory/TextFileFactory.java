@@ -40,7 +40,7 @@ public class TextFileFactory extends TaskListFactory {
 
     @Override
     protected List<TaskFactory> generateList() throws Exception {
-        List<TaskFactory> modules = new ArrayList<>();
+        List<TaskFactory> factories = new ArrayList<>();
 
         List<String> lines = readAllLines(dirlist, charset);
         for (int index = 0; index < lines.size(); index++) {
@@ -53,13 +53,13 @@ public class TextFileFactory extends TaskListFactory {
                 else
                     result = raw;
 
-                modules.add(new TextTaskFactory(pageArgument, documentArgument, result, imageFilter, fileSorter, formatter));
+                factories.add(new TextLineTaskFactory(pageArgument, documentArgument, result, imageFilter, fileSorter, formatter));
             } catch (Exception e) {
                 throw new TextLineException(e, dirlist, index + 1);
             }
         }
 
-        return modules;
+        return factories;
     }
 
 

@@ -15,7 +15,7 @@ public abstract class TaskFactory {
 
     protected abstract File generateDestination();
 
-    public Task create(){
+    public final Task create(){
         return new Task() {
             @Override
             public DocumentArgument getDocumentArgument() {
