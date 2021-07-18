@@ -3,19 +3,19 @@ package org.vincentyeh.IMG2PDF.commandline.command;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.fusesource.jansi.Ansi;
 import org.vincentyeh.IMG2PDF.commandline.converter.*;
-import org.vincentyeh.IMG2PDF.commandline.handler.framework.ExceptionHandler;
 import org.vincentyeh.IMG2PDF.commandline.handler.concrete.ExceptionHandlerFactory;
 import org.vincentyeh.IMG2PDF.commandline.handler.framework.CantHandleException;
+import org.vincentyeh.IMG2PDF.commandline.handler.framework.ExceptionHandler;
 import org.vincentyeh.IMG2PDF.pdf.converter.PDFConverter;
 import org.vincentyeh.IMG2PDF.pdf.converter.exception.PDFConverterException;
 import org.vincentyeh.IMG2PDF.pdf.converter.listener.DefaultConversionListener;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageAlign;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageSize;
-import org.vincentyeh.IMG2PDF.task.concrete.DocumentArgument;
-import org.vincentyeh.IMG2PDF.task.concrete.PageArgument;
 import org.vincentyeh.IMG2PDF.task.concrete.factory.TextFileTaskListFactory;
 import org.vincentyeh.IMG2PDF.task.concrete.factory.TextTaskFactory;
+import org.vincentyeh.IMG2PDF.task.framework.DocumentArgument;
+import org.vincentyeh.IMG2PDF.task.framework.PageArgument;
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 import org.vincentyeh.IMG2PDF.task.framework.factory.TaskFactory;
 import org.vincentyeh.IMG2PDF.util.BytesSize;
@@ -178,22 +178,47 @@ public class ConvertCommand implements Callable<Integer> {
     }
 
     private PageArgument getPageArgument() {
-        PageArgument.Builder builder = new PageArgument.Builder();
-        builder.setAlign(pdf_align);
-        builder.setDirection(pdf_direction);
-        builder.setSize(pdf_size);
-        builder.setAutoRotate(pdf_auto_rotate);
-        return builder.build();
+        return new PageArgument() {
+            @Override
+            public PageAlign getAlign() {
+                return pdf_align;
+            }
+
+            @Override
+            public PageSize getSize() {
+                return pdf_size;
+            }
+
+            @Override
+            public PageDirection getDirection() {
+                return pdf_direction;
+            }
+
+            @Override
+            public boolean autoRotate() {
+                return pdf_auto_rotate;
+            }
+        };
     }
 
     private DocumentArgument getDocumentArgument() {
-        DocumentArgument.Builder builder = new DocumentArgument.Builder();
-        builder.setOwnerPassword(pdf_owner_password);
-        builder.setUserPassword(pdf_user_password);
-        builder.setAccessPermission(pdf_permission);
-        return builder.build();
-    }
+        return new DocumentArgument() {
+            @Override
+            public String getOwnerPassword() {
+                return pdf_owner_password;
+            }
 
+            @Override
+            public String getUserPassword() {
+                return pdf_user_password;
+            }
+
+            @Override
+            public AccessPermission getAccessPermission() {
+                return pdf_permission;
+            }
+        };
+    }
 
     private void convertAllToFile(List<Task> tasks) throws Exception {
         printDebugLog("Converter Configuration");
