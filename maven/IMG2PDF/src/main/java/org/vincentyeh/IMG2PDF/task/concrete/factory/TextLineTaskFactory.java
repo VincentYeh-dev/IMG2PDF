@@ -1,36 +1,75 @@
 package org.vincentyeh.IMG2PDF.task.concrete.factory;
 
 import org.vincentyeh.IMG2PDF.task.concrete.exception.EmptyImagesException;
+import org.vincentyeh.IMG2PDF.task.concrete.exception.TextLineException;
+import org.vincentyeh.IMG2PDF.task.concrete.factory.argument.TextLineCreateArgument;
+import org.vincentyeh.IMG2PDF.task.concrete.factory.argument.TextLineInitialArgument;
 import org.vincentyeh.IMG2PDF.task.framework.DocumentArgument;
 import org.vincentyeh.IMG2PDF.task.framework.PageArgument;
+import org.vincentyeh.IMG2PDF.task.framework.Task;
+import org.vincentyeh.IMG2PDF.task.framework.factory.CreateArgument;
+import org.vincentyeh.IMG2PDF.task.framework.factory.TaskFactory;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
-import org.vincentyeh.IMG2PDF.util.file.exception.FileNotExistsException;
-import org.vincentyeh.IMG2PDF.util.file.exception.InvalidFileException;
 import org.vincentyeh.IMG2PDF.util.file.exception.WrongFileTypeException;
-import org.vincentyeh.IMG2PDF.util.interfaces.NameFormatter;
 
 import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
 import java.util.Arrays;
-import java.util.Comparator;
 
-public class TextLineTaskFactory extends StandardTaskFactory {
-    public TextLineTaskFactory(PageArgument argument, DocumentArgument argument1, File source, FileFilter filter, Comparator<? super File> sorter, NameFormatter<File> formatter) throws EmptyImagesException, IOException, NameFormatter.FormatException{
-        super(argument, argument1,importSortedImagesFiles(source,filter,sorter),new File(formatter.format(source)).getAbsoluteFile());
+public class TextLineTaskFactory extends TaskFactory {
+
+    protected TextLineTaskFactory(TextLineInitialArgument initialArgument) {
+        super(initialArgument);
     }
 
-    private static File[] importSortedImagesFiles(File source_directory, FileFilter imageFilter, Comparator<? super File> fileSorter) throws EmptyImagesException, WrongFileTypeException, InvalidFileException, FileNotExistsException {
-        FileUtils.checkExists(source_directory);
-        FileUtils.checkType(source_directory, WrongFileTypeException.Type.FOLDER);
+    private File[] importSortedImagesFiles(File source_directory) throws EmptyImagesException{
+        final TextLineInitialArgument initialArgument = (TextLineInitialArgument) this.initialArgument;
 
-        File[] files = source_directory.listFiles(imageFilter);
+        File[] files = source_directory.listFiles(initialArgument.getFilter());
 
         if (files == null || files.length == 0)
             throw new EmptyImagesException("No image was found in: " + source_directory);
 
-        Arrays.sort(files, fileSorter);
+        Arrays.sort(files, initialArgument.getSorter());
 
         return files;
+    }
+
+    @Override
+    public Task create(CreateArgument createArgument) throws Exception {
+        final TextLineCreateArgument textLineCreateArgument = (TextLineCreateArgument) createArgument;
+        final TextLineInitialArgument initialArgument = (TextLineInitialArgument) this.initialArgument;
+
+        try {
+            FileUtils.checkExists(textLineCreateArgument.getSource());
+            FileUtils.checkType(textLineCreateArgument.getSource(), WrongFileTypeException.Type.FOLDER);
+
+            File[] images = importSortedImagesFiles(textLineCreateArgument.getSource());
+            File destination = new File(initialArgument.getFormatter().format(textLineCreateArgument.getSource())).getAbsoluteFile();
+
+            return new Task() {
+                @Override
+                public DocumentArgument getDocumentArgument() {
+                    return initialArgument.getDocumentArgument();
+                }
+
+                @Override
+                public PageArgument getPageArgument() {
+                    return initialArgument.getPageArgument();
+                }
+
+                @Override
+                public File[] getImages() {
+                    return images;
+                }
+
+                @Override
+                public File getPdfDestination() {
+                    return destination;
+                }
+            };
+
+        } catch (Exception e) {
+            throw new TextLineException(e,textLineCreateArgument.getSource(),textLineCreateArgument.getLine());
+        }
     }
 }

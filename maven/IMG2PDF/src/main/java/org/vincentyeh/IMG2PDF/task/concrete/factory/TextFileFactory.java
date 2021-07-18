@@ -1,10 +1,11 @@
 package org.vincentyeh.IMG2PDF.task.concrete.factory;
 
 import org.vincentyeh.IMG2PDF.task.concrete.exception.TextFileException;
-import org.vincentyeh.IMG2PDF.task.concrete.exception.TextLineException;
+import org.vincentyeh.IMG2PDF.task.concrete.factory.argument.TextLineCreateArgument;
+import org.vincentyeh.IMG2PDF.task.concrete.factory.argument.TextLineInitialArgument;
 import org.vincentyeh.IMG2PDF.task.framework.DocumentArgument;
 import org.vincentyeh.IMG2PDF.task.framework.PageArgument;
-import org.vincentyeh.IMG2PDF.task.framework.factory.TaskFactory;
+import org.vincentyeh.IMG2PDF.task.framework.factory.CreateArgument;
 import org.vincentyeh.IMG2PDF.task.framework.factory.TaskListFactory;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
 import org.vincentyeh.IMG2PDF.util.file.exception.WrongFileTypeException;
@@ -22,44 +23,31 @@ import java.util.List;
 public class TextFileFactory extends TaskListFactory {
     private final File dirlist;
     private final Charset charset;
-    private final PageArgument pageArgument;
-    private final DocumentArgument documentArgument;
-    private final FileFilter imageFilter;
-    private final Comparator<? super File> fileSorter;
-    private final NameFormatter<File> formatter;
 
     public TextFileFactory(File dirlist, Charset charset, PageArgument argument, DocumentArgument argument1, FileFilter imageFilter, Comparator<? super File> fileSorter, NameFormatter<File> formatter) {
+        super(new TextLineTaskFactory(new TextLineInitialArgument(argument, argument1, imageFilter, fileSorter, formatter)));
         this.dirlist = dirlist;
         this.charset = charset;
-        pageArgument = argument;
-        documentArgument = argument1;
-        this.imageFilter = imageFilter;
-        this.fileSorter = fileSorter;
-        this.formatter = formatter;
     }
 
     @Override
-    protected List<TaskFactory> generateList() throws Exception {
-        List<TaskFactory> factories = new ArrayList<>();
+    protected List<CreateArgument> generateArgumentList() throws Exception {
+        List<CreateArgument> arguments = new ArrayList<>();
 
         List<String> lines = readAllLines(dirlist, charset);
         for (int index = 0; index < lines.size(); index++) {
-            try {
-                File raw = new File(lines.get(index));
+            File raw = new File(lines.get(index));
 
-                File result;
-                if (!raw.isAbsolute())
-                    result = new File(FileUtils.getExistedParentFile(dirlist), lines.get(index)).getAbsoluteFile();
-                else
-                    result = raw;
+            File result;
+            if (!raw.isAbsolute())
+                result = new File(FileUtils.getExistedParentFile(dirlist), lines.get(index)).getAbsoluteFile();
+            else
+                result = raw;
 
-                factories.add(new TextLineTaskFactory(pageArgument, documentArgument, result, imageFilter, fileSorter, formatter));
-            } catch (Exception e) {
-                throw new TextLineException(e, dirlist, index + 1);
-            }
+            arguments.add(new TextLineCreateArgument(result, index + 1));
         }
 
-        return factories;
+        return arguments;
     }
 
 
