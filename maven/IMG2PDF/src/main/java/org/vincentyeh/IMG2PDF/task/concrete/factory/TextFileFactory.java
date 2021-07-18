@@ -2,35 +2,46 @@ package org.vincentyeh.IMG2PDF.task.concrete.factory;
 
 import org.vincentyeh.IMG2PDF.task.concrete.exception.TextException;
 import org.vincentyeh.IMG2PDF.task.concrete.exception.TextFileException;
-import org.vincentyeh.IMG2PDF.task.framework.Task;
-import org.vincentyeh.IMG2PDF.task.framework.factory.TaskFactory;
+import org.vincentyeh.IMG2PDF.task.framework.DocumentArgument;
+import org.vincentyeh.IMG2PDF.task.framework.PageArgument;
+import org.vincentyeh.IMG2PDF.task.framework.factory.TaskFactoryBridge;
 import org.vincentyeh.IMG2PDF.task.framework.factory.TaskListFactory;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
 import org.vincentyeh.IMG2PDF.util.file.exception.WrongFileTypeException;
+import org.vincentyeh.IMG2PDF.util.interfaces.NameFormatter;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileFilter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public class TextFileTaskListFactory implements TaskListFactory {
-
-
+public class TextFileFactory extends TaskListFactory {
     private final File dirlist;
     private final Charset charset;
-    private final TaskFactory factory;
+    private final PageArgument pageArgument;
+    private final DocumentArgument documentArgument;
+    private final FileFilter imageFilter;
+    private final Comparator<? super File> fileSorter;
+    private final NameFormatter<File> formatter;
 
-    public TextFileTaskListFactory(TaskFactory factory, File dirlist, Charset charset) {
-        this.factory = factory;
+    public TextFileFactory(File dirlist, Charset charset, PageArgument argument, DocumentArgument argument1, FileFilter imageFilter, Comparator<? super File> fileSorter, NameFormatter<File> formatter) {
         this.dirlist = dirlist;
         this.charset = charset;
+        pageArgument = argument;
+        documentArgument = argument1;
+        this.imageFilter = imageFilter;
+        this.fileSorter = fileSorter;
+        this.formatter = formatter;
     }
 
     @Override
-    public List<Task> create() throws Exception {
-        List<Task> tasks = new ArrayList<>();
+    protected List<TaskFactoryBridge> generateList() throws Exception {
+        List<TaskFactoryBridge> modules = new ArrayList<>();
+
         List<String> lines = readAllLines(dirlist, charset);
         for (int index = 0; index < lines.size(); index++) {
             try {
@@ -42,13 +53,15 @@ public class TextFileTaskListFactory implements TaskListFactory {
                 else
                     result = raw;
 
-                tasks.add(factory.create(result));
-            }catch (Exception e){
-                throw new TextLineException(e,dirlist,index+1);
+                modules.add(new StandardTaskFactoryBridge(pageArgument, documentArgument, result, imageFilter, fileSorter, formatter));
+            } catch (Exception e) {
+                throw new TextLineException(e, dirlist, index + 1);
             }
         }
-        return tasks;
+
+        return modules;
     }
+
 
     private static List<String> readAllLines(File file, Charset charset) throws TextFileException {
         try {
@@ -81,7 +94,6 @@ public class TextFileTaskListFactory implements TaskListFactory {
             return result.trim();
         }
     }
-
 
 
     public static class TextLineException extends TextException {
