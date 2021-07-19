@@ -1,6 +1,5 @@
 package org.vincentyeh.IMG2PDF.commandline.command;
 
-import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.fusesource.jansi.Ansi;
 import org.vincentyeh.IMG2PDF.commandline.converter.*;
 import org.vincentyeh.IMG2PDF.commandline.handler.concrete.ExceptionHandlerFactory;
@@ -9,12 +8,13 @@ import org.vincentyeh.IMG2PDF.commandline.handler.framework.ExceptionHandler;
 import org.vincentyeh.IMG2PDF.pdf.converter.PDFConverter;
 import org.vincentyeh.IMG2PDF.pdf.converter.exception.PDFConverterException;
 import org.vincentyeh.IMG2PDF.pdf.converter.listener.DefaultConversionListener;
+import org.vincentyeh.IMG2PDF.pdf.parameter.Permission;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageAlign;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageSize;
 import org.vincentyeh.IMG2PDF.task.concrete.factory.TextFileFactory;
-import org.vincentyeh.IMG2PDF.task.framework.DocumentArgument;
-import org.vincentyeh.IMG2PDF.task.framework.PageArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.DocumentArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageArgument;
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 import org.vincentyeh.IMG2PDF.task.framework.factory.TaskListFactory;
 import org.vincentyeh.IMG2PDF.util.BytesSize;
@@ -57,8 +57,8 @@ public class ConvertCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"--pdf_user_password", "-pupwd"})
     String pdf_user_password;
 
-    @CommandLine.Option(names = {"--pdf_permission", "-pp"}, defaultValue = "255", converter = AccessPermissionConverter.class)
-    AccessPermission pdf_permission;
+    @CommandLine.Option(names = {"--pdf_permission", "-pp"}, defaultValue = "255", converter = PermissionConverter.class)
+    Permission pdf_permission;
 
     @CommandLine.Option(names = {"--pdf_align", "-pa"}, defaultValue = "CENTER-CENTER", converter = PageAlignConverter.class)
     PageAlign pdf_align;
@@ -204,6 +204,11 @@ public class ConvertCommand implements Callable<Integer> {
     private DocumentArgument getDocumentArgument() {
         return new DocumentArgument() {
             @Override
+            public String getTitle() {
+                return null;
+            }
+
+            @Override
             public String getOwnerPassword() {
                 return pdf_owner_password;
             }
@@ -214,9 +219,10 @@ public class ConvertCommand implements Callable<Integer> {
             }
 
             @Override
-            public AccessPermission getAccessPermission() {
+            public Permission getPermission() {
                 return pdf_permission;
             }
+
         };
     }
 

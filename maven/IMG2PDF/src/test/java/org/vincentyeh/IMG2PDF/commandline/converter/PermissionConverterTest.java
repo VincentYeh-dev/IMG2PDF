@@ -14,25 +14,25 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class AccessPermissionConverterTest {
+public class PermissionConverterTest {
     @ParameterizedTest
     @NullAndEmptySource
     public void testNullAndEmptyConversion(String input) {
         assertThrows(IllegalArgumentException.class,
-                () -> new AccessPermissionConverter().convert(input));
+                () -> new PermissionConverter().convert(input));
     }
 
     @ParameterizedTest
     @MethodSource("range")
     public void testInRangeValue(String input) {
-        assertDoesNotThrow(() -> new AccessPermissionConverter().convert(input));
+        assertDoesNotThrow(() -> new PermissionConverter().convert(input));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"256","512","1024","-1","-256","-512","-1024"})
     public void testOutOfRangeValue(String input) {
         assertThrows(CommandLine.TypeConversionException.class,
-                () -> new AccessPermissionConverter().convert(input));
+                () -> new PermissionConverter().convert(input));
     }
 
     public static Stream<String> range() {

@@ -1,7 +1,7 @@
 package org.vincentyeh.IMG2PDF.task.concrete.factory.argument;
 
-import org.vincentyeh.IMG2PDF.task.framework.DocumentArgument;
-import org.vincentyeh.IMG2PDF.task.framework.PageArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.DocumentArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageArgument;
 import org.vincentyeh.IMG2PDF.task.framework.factory.InitialArgument;
 import org.vincentyeh.IMG2PDF.util.interfaces.NameFormatter;
 

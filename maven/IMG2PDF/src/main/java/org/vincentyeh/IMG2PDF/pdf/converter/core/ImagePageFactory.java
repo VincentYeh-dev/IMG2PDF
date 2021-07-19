@@ -1,8 +1,5 @@
 package org.vincentyeh.IMG2PDF.pdf.converter.core;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -12,6 +9,9 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageAlign;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageSize;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import static org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection.Landscape;
 import static org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection.Portrait;
@@ -23,45 +23,18 @@ import static org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection.Portrait;
  */
 public class ImagePageFactory {
 
-    public static class Builder{
-        private PageAlign align;
-        private PageSize size;
-        private PageDirection direction;
-        private boolean auto_rotate;
-
-        public void setAlign(PageAlign align) {
-            if(align==null)
-                throw new IllegalArgumentException("align==null");
-            this.align = align;
-        }
-
-        public void setSize(PageSize size) {
-            if(size==null)
-                throw new IllegalArgumentException("size==null");
-            this.size = size;
-        }
-
-        public void setDirection(PageDirection direction) {
-            if(direction==null)
-                throw new IllegalArgumentException("direction==null");
-            this.direction = direction;
-        }
-
-        public void setAutoRotate(boolean auto_rotate) {
-            this.auto_rotate = auto_rotate;
-        }
-
-        public ImagePageFactory build(){
-            return new ImagePageFactory(align,size,direction,auto_rotate);
-        }
-    }
-
     private final PageAlign align;
     private final PageSize size;
     private final PageDirection direction;
     private final boolean auto_rotate;
 
-    private ImagePageFactory(PageAlign align, PageSize size, PageDirection direction, boolean auto_rotate) {
+    public ImagePageFactory(PageAlign align, PageSize size, PageDirection direction, boolean auto_rotate) {
+        if(align==null)
+            throw new IllegalArgumentException("align==null");
+        if(size==null)
+            throw new IllegalArgumentException("size==null");
+        if(direction==null)
+            throw new IllegalArgumentException("direction==null");
         this.align = align;
         this.size = size;
         this.direction = direction;
