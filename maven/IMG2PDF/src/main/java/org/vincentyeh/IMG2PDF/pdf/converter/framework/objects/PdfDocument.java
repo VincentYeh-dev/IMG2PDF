@@ -1,5 +1,6 @@
 package org.vincentyeh.IMG2PDF.pdf.converter.framework.objects;
 
+import org.vincentyeh.IMG2PDF.pdf.parameter.PDFDocumentInfo;
 import org.vincentyeh.IMG2PDF.pdf.parameter.Permission;
 
 import java.io.File;
@@ -12,7 +13,7 @@ public interface PdfDocument<DOCUMENT> {
 
     void setPermission(Permission permission);
 
-    void setTitle(String title);
+    void setInfo(PDFDocumentInfo info);
 
     void encrypt() throws IOException;
 

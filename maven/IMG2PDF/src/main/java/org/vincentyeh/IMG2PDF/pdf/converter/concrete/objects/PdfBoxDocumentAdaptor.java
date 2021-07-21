@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PdfDocument;
 import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PdfPage;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PDFDocumentInfo;
 import org.vincentyeh.IMG2PDF.pdf.parameter.Permission;
 
 import java.io.File;
@@ -14,7 +15,6 @@ import java.io.IOException;
 public class PdfBoxDocumentAdaptor implements PdfDocument<PDDocument> {
     private final PDDocument document;
 
-    private final PDDocumentInformation information = new PDDocumentInformation();
     private final AccessPermission permission = new AccessPermission();
     private String userPassword;
     private String ownerPassword;
@@ -46,10 +46,19 @@ public class PdfBoxDocumentAdaptor implements PdfDocument<PDDocument> {
     }
 
     @Override
-    public void setTitle(String title) {
-        information.setTitle(title);
+    public void setInfo(PDFDocumentInfo info) {
+        if (info == null) return;
+
+        PDDocumentInformation information = new PDDocumentInformation();
+        information.setTitle(info.getTitle());
+        information.setAuthor(info.getAuthor());
+        information.setSubject(info.getSubject());
+        information.setCreator(info.getCreator());
+        information.setProducer(info.getProducer());
+
         document.setDocumentInformation(information);
     }
+
 
     @Override
     public void encrypt() throws IOException {

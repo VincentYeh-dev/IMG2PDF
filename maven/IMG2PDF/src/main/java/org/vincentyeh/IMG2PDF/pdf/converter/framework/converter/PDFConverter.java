@@ -39,7 +39,7 @@ public abstract class PDFConverter {
             document.setUserPassword(task.getDocumentArgument().getUserPassword());
             document.setPermission(task.getDocumentArgument().getPermission());
             document.encrypt();
-            document.setTitle(task.getDocumentArgument().getTitle());
+            document.setInfo(task.getDocumentArgument().getInformation());
 
             PageStepGenerator iterator = getPageGenerator(task, document);
             while (iterator.hasNext()) {

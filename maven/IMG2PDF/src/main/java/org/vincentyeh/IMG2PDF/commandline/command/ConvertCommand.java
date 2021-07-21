@@ -199,10 +199,6 @@ public class ConvertCommand implements Callable<Integer> {
 
     private DocumentArgument getDocumentArgument() {
         return new DocumentArgument() {
-            @Override
-            public String getTitle() {
-                return null;
-            }
 
             @Override
             public String getOwnerPassword() {
@@ -220,33 +216,8 @@ public class ConvertCommand implements Callable<Integer> {
             }
 
             @Override
-            public PDFDocumentInformation getInformation() {
-                return new PDFDocumentInformation() {
-                    @Override
-                    public String getTitle() {
-                        return "AA";
-                    }
-
-                    @Override
-                    public String getAuthor() {
-                        return "BB";
-                    }
-
-                    @Override
-                    public String getCreator() {
-                        return "CC";
-                    }
-
-                    @Override
-                    public String getProducer() {
-                        return "DD";
-                    }
-
-                    @Override
-                    public String getSubject() {
-                        return "EE";
-                    }
-                };
+            public PDFDocumentInfo getInformation() {
+                return null;
             }
 
         };
