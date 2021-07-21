@@ -1,6 +1,6 @@
-package org.vincentyeh.IMG2PDF.pdf.converter.concrete.factory;
+package org.vincentyeh.IMG2PDF.pdf.converter.framework.factory;
 
-class SizeCalculator {
+public class SizeCalculator {
 
     public Size scaleUpToMax(Size img_size, Size page_size) {
         if (img_size == null)

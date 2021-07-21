@@ -1,10 +1,10 @@
-package org.vincentyeh.IMG2PDF.pdf.converter.concrete.factory;
+package org.vincentyeh.IMG2PDF.pdf.converter.framework.factory;
 
 
 /**
  * https://www.vinaysingh.info/negative-zero/
  */
-class Position {
+public class Position {
     private final float x;
     private final float y;
 

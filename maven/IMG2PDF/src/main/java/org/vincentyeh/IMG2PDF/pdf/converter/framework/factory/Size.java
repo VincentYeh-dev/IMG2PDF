@@ -1,6 +1,6 @@
-package org.vincentyeh.IMG2PDF.pdf.converter.concrete.factory;
+package org.vincentyeh.IMG2PDF.pdf.converter.framework.factory;
 
-class Size {
+public class Size {
     private final float height;
     private final float width;
 
