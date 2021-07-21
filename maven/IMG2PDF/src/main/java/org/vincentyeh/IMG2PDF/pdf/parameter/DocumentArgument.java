@@ -5,6 +5,6 @@ public interface DocumentArgument {
     String getOwnerPassword();
     String getUserPassword();
     Permission getPermission();
-
+    PDFDocumentInformation getInformation();
 
 }

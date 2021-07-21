@@ -219,6 +219,36 @@ public class ConvertCommand implements Callable<Integer> {
                 return pdf_permission;
             }
 
+            @Override
+            public PDFDocumentInformation getInformation() {
+                return new PDFDocumentInformation() {
+                    @Override
+                    public String getTitle() {
+                        return "AA";
+                    }
+
+                    @Override
+                    public String getAuthor() {
+                        return "BB";
+                    }
+
+                    @Override
+                    public String getCreator() {
+                        return "CC";
+                    }
+
+                    @Override
+                    public String getProducer() {
+                        return "DD";
+                    }
+
+                    @Override
+                    public String getSubject() {
+                        return "EE";
+                    }
+                };
+            }
+
         };
     }
 

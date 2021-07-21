@@ -3,7 +3,7 @@ package org.vincentyeh.IMG2PDF.pdf.converter.framework.converter;
 import org.vincentyeh.IMG2PDF.pdf.converter.concrete.exception.PDFConverterException;
 import org.vincentyeh.IMG2PDF.pdf.converter.concrete.exception.SaveException;
 import org.vincentyeh.IMG2PDF.pdf.converter.framework.listener.ConversionListener;
-import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PageGenerator;
+import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PageStepGenerator;
 import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PdfDocument;
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
@@ -20,7 +20,7 @@ public abstract class PDFConverter {
         this.overwrite = overwrite;
     }
 
-    protected abstract PageGenerator getPageGenerator(Task task, PdfDocument<?> document);
+    protected abstract PageStepGenerator getPageGenerator(Task task, PdfDocument<?> document);
 
     protected abstract PdfDocument<?> getDocument(Task task);
 
@@ -41,7 +41,7 @@ public abstract class PDFConverter {
             document.encrypt();
             document.setTitle(task.getDocumentArgument().getTitle());
 
-            PageGenerator iterator = getPageGenerator(task, document);
+            PageStepGenerator iterator = getPageGenerator(task, document);
             while (iterator.hasNext()) {
                 if (listener != null)
                     listener.onConverting(iterator.getIndex(), task.getPdfDestination());

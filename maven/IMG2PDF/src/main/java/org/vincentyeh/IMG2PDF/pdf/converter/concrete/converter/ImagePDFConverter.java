@@ -2,10 +2,11 @@ package org.vincentyeh.IMG2PDF.pdf.converter.concrete.converter;
 
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.vincentyeh.IMG2PDF.pdf.converter.concrete.factory.PdfBoxImagePageFactory;
+import org.vincentyeh.IMG2PDF.pdf.converter.concrete.objects.ImagePageStepGenerator;
 import org.vincentyeh.IMG2PDF.pdf.converter.concrete.objects.PdfBoxDocumentAdaptor;
-import org.vincentyeh.IMG2PDF.pdf.converter.concrete.objects.PdfBoxPageGenerator;
 import org.vincentyeh.IMG2PDF.pdf.converter.framework.converter.PDFConverter;
-import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PageGenerator;
+import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PageStepGenerator;
 import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PdfDocument;
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 
@@ -20,8 +21,8 @@ public class ImagePDFConverter extends PDFConverter {
     }
 
     @Override
-    protected PageGenerator getPageGenerator(Task task, PdfDocument<?> document) {
-        return new PdfBoxPageGenerator(task, (PDDocument) document.get());
+    protected PageStepGenerator getPageGenerator(Task task, PdfDocument<?> document) {
+        return new ImagePageStepGenerator(task.getImages(), new PdfBoxImagePageFactory(task.getPageArgument(),document));
     }
 
     @Override

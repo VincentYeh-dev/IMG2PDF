@@ -6,7 +6,13 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.vincentyeh.IMG2PDF.pdf.converter.concrete.objects.PdfBoxDocumentAdaptor;
+import org.vincentyeh.IMG2PDF.pdf.converter.concrete.objects.PdfBoxPageAdaptor;
+import org.vincentyeh.IMG2PDF.pdf.converter.framework.factory.ImagePageFactory;
+import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PdfDocument;
+import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PdfPage;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageAlign;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageArgument;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageSize;
 
@@ -21,39 +27,31 @@ import static org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection.Portrait;
  *
  * @author VincentYeh
  */
-public class ImagePageFactory {
+public class PdfBoxImagePageFactory extends ImagePageFactory {
 
-    private final PageAlign align;
-    private final PageSize size;
-    private final PageDirection direction;
-    private final boolean auto_rotate;
 
-    public ImagePageFactory(PageAlign align, PageSize size, PageDirection direction, boolean auto_rotate) {
-        if(align==null)
-            throw new IllegalArgumentException("align==null");
-        if(size==null)
-            throw new IllegalArgumentException("size==null");
-        if(direction==null)
-            throw new IllegalArgumentException("direction==null");
-        this.align = align;
-        this.size = size;
-        this.direction = direction;
-        this.auto_rotate = auto_rotate;
-    }
+    private final PageArgument argument;
 
-    public PDPage getImagePage(PDDocument document, BufferedImage raw_image) throws Exception {
+    public PdfBoxImagePageFactory(PageArgument argument, PdfDocument<?> document) {
+        super(document);
+        this.argument = argument;
+
         if (document == null)
             throw new IllegalArgumentException("document==null");
+    }
 
-        if (raw_image == null)
+    @Override
+    public PdfPage<?> create(BufferedImage image) throws IOException {
+
+        if (image == null)
             throw new IllegalArgumentException("rawImage==null");
 
-        PageDirection direction= getSuitableDirection(raw_image);
-        Size new_page_size = getSuitablePageSize(direction,size, raw_image);
-        Size new_image_size = getMaxScaleImageSize(raw_image, new_page_size);
-        final Position new_position = calculateImagePosition(new_image_size, new_page_size,align);
+        PageDirection direction= getSuitableDirection(image);
+        Size new_page_size = getSuitablePageSize(direction,argument.getSize(), image);
+        Size new_image_size = getMaxScaleImageSize(image, new_page_size);
+        final Position new_position = calculateImagePosition(new_image_size, new_page_size,argument.getAlign());
 
-        return createPDPage(document,raw_image,new_image_size,new_position,new_page_size);
+        return new PdfBoxPageAdaptor(createPDPage(((PdfBoxDocumentAdaptor)document).get(),image,new_image_size,new_position,new_page_size));
     }
 
 
@@ -79,13 +77,13 @@ public class ImagePageFactory {
     }
 
     private PageDirection getSuitableDirection(BufferedImage image) {
-        if (size == PageSize.DEPEND_ON_IMG) {
+        if (argument.getSize()== PageSize.DEPEND_ON_IMG) {
             return Portrait;
         }
-        if (auto_rotate) {
+        if (argument.autoRotate()) {
             return detectDirection(image.getHeight(),image.getWidth());
         } else {
-            return direction;
+            return argument.getDirection();
         }
     }
 

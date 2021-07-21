@@ -1,12 +1,9 @@
 package org.vincentyeh.IMG2PDF.pdf.converter.concrete.objects;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.vincentyeh.IMG2PDF.pdf.converter.concrete.factory.ImagePageFactory;
 import org.vincentyeh.IMG2PDF.pdf.converter.concrete.exception.ReadImageException;
-import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PageGenerator;
+import org.vincentyeh.IMG2PDF.pdf.converter.framework.factory.ImagePageFactory;
+import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PageStepGenerator;
 import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PdfPage;
-import org.vincentyeh.IMG2PDF.pdf.parameter.PageArgument;
-import org.vincentyeh.IMG2PDF.task.framework.Task;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
 
 import javax.imageio.ImageIO;
@@ -15,27 +12,24 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-public class PdfBoxPageGenerator implements PageGenerator {
-    private final PDDocument document;
+public class ImagePageStepGenerator implements PageStepGenerator {
     private final File[] files;
-    private final ImagePageFactory factory;
-    private int index=0;
+    private final ImagePageFactory  factory;
+    private int index = 0;
 
-    public PdfBoxPageGenerator(Task task, PDDocument document) {
-        this.document = document;
-        PageArgument pageArgument=task.getPageArgument();
-        files = task.getImages();
-        factory=new ImagePageFactory(pageArgument.getAlign(), pageArgument.getSize(), pageArgument.getDirection(), pageArgument.autoRotate());
+    public ImagePageStepGenerator(File[] files, ImagePageFactory factory) {
+        this.files = files;
+        this.factory=factory;
     }
 
     @Override
     public boolean hasNext() {
-        return index<files.length;
+        return index < files.length;
     }
 
     @Override
-    public PdfPage<?> generateAndNext() throws Exception{
-        return new PdfBoxPageAdaptor(factory.getImagePage(document, readImage(files[index++])));
+    public PdfPage<?> generateAndNext() throws Exception {
+        return factory.create(readImage(files[index++]));
     }
 
     @Override
