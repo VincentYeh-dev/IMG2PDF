@@ -1,27 +1,24 @@
 package org.vincentyeh.IMG2PDF.pdf.converter.concrete;
 
-import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
-import org.vincentyeh.IMG2PDF.pdf.converter.framework.PdfDocumentBuilder;
+import org.vincentyeh.IMG2PDF.pdf.converter.framework.PdfDocument;
 import org.vincentyeh.IMG2PDF.pdf.converter.framework.PdfPage;
 import org.vincentyeh.IMG2PDF.pdf.parameter.Permission;
 
 import java.io.File;
 import java.io.IOException;
 
-public class PDFBoxDocumentBuilder extends PdfDocumentBuilder {
-
+public class PdfBoxDocumentAdaptor implements PdfDocument<PDDocument> {
     private final PDDocument document;
 
     private final AccessPermission permission = new AccessPermission();
     private String userPassword;
     private String ownerPassword;
 
-    public PDFBoxDocumentBuilder(long maxMainMemoryBytes, File tempFolder) {
-        this.document = new PDDocument(MemoryUsageSetting.setupMixed(maxMainMemoryBytes).setTempDir(tempFolder));
+    public PdfBoxDocumentAdaptor(PDDocument document) {
+        this.document = document;
     }
 
     @Override
@@ -58,12 +55,24 @@ public class PDFBoxDocumentBuilder extends PdfDocumentBuilder {
 
     @Override
     public void addPage(PdfPage<?> page) {
-        document.addPage((PDPage) page.get());
+        document.addPage(((PdfBoxPageAdaptor) page).get());
     }
 
-    public final PDDocument getResult() {
+    @Override
+    public void save(File file) throws IOException {
+        document.save(file);
+    }
+
+    @Override
+    public void close() throws IOException {
+        document.close();
+    }
+
+    @Override
+    public PDDocument get() {
         return document;
     }
+
 
     private StandardProtectionPolicy createProtectionPolicy() {
         // Define the length of the encryption key.

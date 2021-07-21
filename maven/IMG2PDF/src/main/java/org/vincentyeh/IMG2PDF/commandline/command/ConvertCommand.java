@@ -5,16 +5,12 @@ import org.vincentyeh.IMG2PDF.commandline.converter.*;
 import org.vincentyeh.IMG2PDF.commandline.handler.concrete.ExceptionHandlerFactory;
 import org.vincentyeh.IMG2PDF.commandline.handler.framework.CantHandleException;
 import org.vincentyeh.IMG2PDF.commandline.handler.framework.ExceptionHandler;
-import org.vincentyeh.IMG2PDF.pdf.converter.PDFConverter;
+import org.vincentyeh.IMG2PDF.pdf.converter.concrete.ImageConverter;
 import org.vincentyeh.IMG2PDF.pdf.converter.exception.PDFConverterException;
+import org.vincentyeh.IMG2PDF.pdf.converter.framework.IConverter;
 import org.vincentyeh.IMG2PDF.pdf.converter.listener.DefaultConversionListener;
-import org.vincentyeh.IMG2PDF.pdf.parameter.Permission;
-import org.vincentyeh.IMG2PDF.pdf.parameter.PageAlign;
-import org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection;
-import org.vincentyeh.IMG2PDF.pdf.parameter.PageSize;
+import org.vincentyeh.IMG2PDF.pdf.parameter.*;
 import org.vincentyeh.IMG2PDF.task.concrete.factory.TextFileFactory;
-import org.vincentyeh.IMG2PDF.pdf.parameter.DocumentArgument;
-import org.vincentyeh.IMG2PDF.pdf.parameter.PageArgument;
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 import org.vincentyeh.IMG2PDF.task.framework.factory.TaskListFactory;
 import org.vincentyeh.IMG2PDF.util.BytesSize;
@@ -129,9 +125,9 @@ public class ConvertCommand implements Callable<Integer> {
             try {
                 printColorFormat(getResourceBundleString("execution.convert.start.parsing") + "\n", Ansi.Color.BLUE, dirlist.getPath());
 
-                TaskListFactory factory=new TextFileFactory(dirlist,configuration.getDirectoryListCharset(),getPageArgument(),getDocumentArgument(),filter,fileSorter,new FileNameFormatter(pdf_dst));
+                TaskListFactory factory = new TextFileFactory(dirlist, configuration.getDirectoryListCharset(), getPageArgument(), getDocumentArgument(), filter, fileSorter, new FileNameFormatter(pdf_dst));
 
-                List<Task> found=factory.create();
+                List<Task> found = factory.create();
 
                 printColorFormat(getResourceBundleString("execution.convert.start.parsed") + "\n", Ansi.Color.BLUE, found.size(), dirlist.getPath());
 
@@ -226,13 +222,15 @@ public class ConvertCommand implements Callable<Integer> {
         };
     }
 
-    private void convertAllToFile(List<Task> tasks) throws Exception {
+    private void convertAllToFile(List<Task> tasks) {
         printDebugLog("Converter Configuration");
         printDebugLog(getColor("\t|- max main memory usage:" + maxMainMemoryBytes.getBytes(), Ansi.Color.CYAN));
         printDebugLog(getColor("\t|- temporary folder:" + tempFolder.getAbsolutePath(), Ansi.Color.CYAN));
         printDebugLog(getColor("\t|- Overwrite:" + overwrite_output, Ansi.Color.CYAN));
-        PDFConverter converter = new PDFConverter(maxMainMemoryBytes.getBytes(), tempFolder, overwrite_output);
+        IConverter converter = new ImageConverter(maxMainMemoryBytes.getBytes(), tempFolder, overwrite_output);
         converter.setListener(new DefaultConversionListener(configuration.getLocale()));
+//        PDFConverter converter = new PDFConverter(maxMainMemoryBytes.getBytes(), tempFolder, overwrite_output);
+//        converter.setListener();
 
         for (Task task : tasks) {
             File result = convertToFile(converter, task);
@@ -259,7 +257,7 @@ public class ConvertCommand implements Callable<Integer> {
         }
     }
 
-    private File convertToFile(PDFConverter converter, Task task) {
+    private File convertToFile(IConverter converter, Task task) {
         printDebugLog("Converting");
         printDebugLog("Name: " + task.getPdfDestination());
         printDebugLog("Images");
