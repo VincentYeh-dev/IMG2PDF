@@ -1,4 +1,4 @@
-package org.vincentyeh.IMG2PDF.pdf.converter.exception;
+package org.vincentyeh.IMG2PDF.pdf.converter.concrete.exception;
 
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 

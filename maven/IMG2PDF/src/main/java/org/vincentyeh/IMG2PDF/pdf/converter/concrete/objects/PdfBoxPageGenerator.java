@@ -1,11 +1,10 @@
-package org.vincentyeh.IMG2PDF.pdf.converter.concrete;
+package org.vincentyeh.IMG2PDF.pdf.converter.concrete.objects;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.vincentyeh.IMG2PDF.pdf.converter.core.ImagePageFactory;
-import org.vincentyeh.IMG2PDF.pdf.converter.exception.ReadImageException;
-import org.vincentyeh.IMG2PDF.pdf.converter.framework.PageIterator;
-import org.vincentyeh.IMG2PDF.pdf.converter.framework.PdfPage;
+import org.vincentyeh.IMG2PDF.pdf.converter.concrete.factory.ImagePageFactory;
+import org.vincentyeh.IMG2PDF.pdf.converter.concrete.exception.ReadImageException;
+import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PageGenerator;
+import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PdfPage;
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageArgument;
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
@@ -16,13 +15,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-public class PdfBoxPageIterator implements PageIterator<PDPage> {
+public class PdfBoxPageGenerator implements PageGenerator {
     private final PDDocument document;
     private final File[] files;
     private final ImagePageFactory factory;
     private int index=0;
 
-    public PdfBoxPageIterator(Task task, PDDocument document) {
+    public PdfBoxPageGenerator(Task task, PDDocument document) {
         this.document = document;
         PageArgument pageArgument=task.getPageArgument();
         files = task.getImages();
@@ -35,7 +34,7 @@ public class PdfBoxPageIterator implements PageIterator<PDPage> {
     }
 
     @Override
-    public PdfPage<?> next() throws Exception {
+    public PdfPage<?> generateAndNext() throws Exception{
         return new PdfBoxPageAdaptor(factory.getImagePage(document, readImage(files[index++])));
     }
 

@@ -1,10 +1,10 @@
-package org.vincentyeh.IMG2PDF.pdf.converter.concrete;
+package org.vincentyeh.IMG2PDF.pdf.converter.concrete.objects;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
-import org.vincentyeh.IMG2PDF.pdf.converter.framework.PdfDocument;
-import org.vincentyeh.IMG2PDF.pdf.converter.framework.PdfPage;
+import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PdfDocument;
+import org.vincentyeh.IMG2PDF.pdf.converter.framework.objects.PdfPage;
 import org.vincentyeh.IMG2PDF.pdf.parameter.Permission;
 
 import java.io.File;

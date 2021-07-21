@@ -5,10 +5,10 @@ import org.vincentyeh.IMG2PDF.commandline.converter.*;
 import org.vincentyeh.IMG2PDF.commandline.handler.concrete.ExceptionHandlerFactory;
 import org.vincentyeh.IMG2PDF.commandline.handler.framework.CantHandleException;
 import org.vincentyeh.IMG2PDF.commandline.handler.framework.ExceptionHandler;
-import org.vincentyeh.IMG2PDF.pdf.converter.concrete.ImageConverter;
-import org.vincentyeh.IMG2PDF.pdf.converter.exception.PDFConverterException;
-import org.vincentyeh.IMG2PDF.pdf.converter.framework.IConverter;
-import org.vincentyeh.IMG2PDF.pdf.converter.listener.DefaultConversionListener;
+import org.vincentyeh.IMG2PDF.pdf.converter.concrete.converter.ImagePDFConverter;
+import org.vincentyeh.IMG2PDF.pdf.converter.concrete.exception.PDFConverterException;
+import org.vincentyeh.IMG2PDF.pdf.converter.framework.converter.PDFConverter;
+import org.vincentyeh.IMG2PDF.pdf.converter.concrete.listener.DefaultConversionListener;
 import org.vincentyeh.IMG2PDF.pdf.parameter.*;
 import org.vincentyeh.IMG2PDF.task.concrete.factory.TextFileFactory;
 import org.vincentyeh.IMG2PDF.task.framework.Task;
@@ -227,10 +227,8 @@ public class ConvertCommand implements Callable<Integer> {
         printDebugLog(getColor("\t|- max main memory usage:" + maxMainMemoryBytes.getBytes(), Ansi.Color.CYAN));
         printDebugLog(getColor("\t|- temporary folder:" + tempFolder.getAbsolutePath(), Ansi.Color.CYAN));
         printDebugLog(getColor("\t|- Overwrite:" + overwrite_output, Ansi.Color.CYAN));
-        IConverter converter = new ImageConverter(maxMainMemoryBytes.getBytes(), tempFolder, overwrite_output);
+        PDFConverter converter = new ImagePDFConverter(maxMainMemoryBytes.getBytes(), tempFolder, overwrite_output);
         converter.setListener(new DefaultConversionListener(configuration.getLocale()));
-//        PDFConverter converter = new PDFConverter(maxMainMemoryBytes.getBytes(), tempFolder, overwrite_output);
-//        converter.setListener();
 
         for (Task task : tasks) {
             File result = convertToFile(converter, task);
@@ -257,7 +255,7 @@ public class ConvertCommand implements Callable<Integer> {
         }
     }
 
-    private File convertToFile(IConverter converter, Task task) {
+    private File convertToFile(PDFConverter converter, Task task) {
         printDebugLog("Converting");
         printDebugLog("Name: " + task.getPdfDestination());
         printDebugLog("Images");

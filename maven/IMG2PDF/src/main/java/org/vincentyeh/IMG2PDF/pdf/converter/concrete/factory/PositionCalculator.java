@@ -1,4 +1,4 @@
-package org.vincentyeh.IMG2PDF.pdf.converter.core;
+package org.vincentyeh.IMG2PDF.pdf.converter.concrete.factory;
 
 import org.vincentyeh.IMG2PDF.pdf.parameter.PageAlign;
 
