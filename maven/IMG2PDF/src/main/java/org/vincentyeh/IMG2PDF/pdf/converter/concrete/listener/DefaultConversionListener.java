@@ -4,7 +4,6 @@ import org.fusesource.jansi.Ansi;
 import org.vincentyeh.IMG2PDF.pdf.converter.framework.listener.ConversionListener;
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -41,7 +40,7 @@ public class DefaultConversionListener implements ConversionListener {
     }
 
     @Override
-    public void onConverting(int index, File file) {
+    public void onConverting(int index) {
         progress += perImg;
         while (progress >= 1) {
             progress_bar[counter] = '=';
@@ -49,7 +48,7 @@ public class DefaultConversionListener implements ConversionListener {
             counter++;
         }
         String name = task.getPdfDestination().getName();
-        Ansi msg=getRenderFormat("\r"+resourceBundle.getString("convert.listener.converting") , new String(progress_bar), name, index + 1, total, file.getName());
+        Ansi msg=getRenderFormat("\r"+resourceBundle.getString("convert.listener.converting") , new String(progress_bar), name, index + 1, total);
         print(msg);
         previous_msg_length=msg.toString().length();
     }

@@ -18,6 +18,7 @@ import org.vincentyeh.IMG2PDF.util.file.FileNameFormatter;
 import org.vincentyeh.IMG2PDF.util.file.FileSorter;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
 import org.vincentyeh.IMG2PDF.util.file.GlobbingFileFilter;
+import org.vincentyeh.IMG2PDF.util.file.exception.MakeDirectoryException;
 import picocli.CommandLine;
 
 import java.awt.*;
@@ -223,7 +224,7 @@ public class ConvertCommand implements Callable<Integer> {
         };
     }
 
-    private void convertAllToFile(List<Task> tasks) {
+    private void convertAllToFile(List<Task> tasks) throws MakeDirectoryException {
         printDebugLog("Converter Configuration");
         printDebugLog(getColor("\t|- max main memory usage:" + maxMainMemoryBytes.getBytes(), Ansi.Color.CYAN));
         printDebugLog(getColor("\t|- temporary folder:" + tempFolder.getAbsolutePath(), Ansi.Color.CYAN));

@@ -2,8 +2,6 @@ package org.vincentyeh.IMG2PDF.pdf.converter.framework.listener;
 
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 
-import java.io.File;
-
 
 /**
  * This interface can listen the event when conversion started.
@@ -17,7 +15,7 @@ public interface ConversionListener {
 	 * When the single image written to a page.
 	 * @param index the index of image files
 	 */
-	void onConverting(int index, File file);
+	void onConverting(int index);
 	
 	/**
 	 * When the conversion is done.

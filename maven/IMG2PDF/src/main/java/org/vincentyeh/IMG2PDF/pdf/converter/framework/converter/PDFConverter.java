@@ -20,7 +20,7 @@ public abstract class PDFConverter {
         this.overwrite = overwrite;
     }
 
-    protected abstract PageStepGenerator getPageGenerator(Task task, PdfDocument<?> document);
+    protected abstract PageStepGenerator getPageStepGenerator(Task task, PdfDocument<?> document);
 
     protected abstract PdfDocument<?> getDocument(Task task);
 
@@ -41,10 +41,10 @@ public abstract class PDFConverter {
             document.encrypt();
             document.setInfo(task.getDocumentArgument().getInformation());
 
-            PageStepGenerator iterator = getPageGenerator(task, document);
+            PageStepGenerator iterator = getPageStepGenerator(task, document);
             while (iterator.hasNext()) {
                 if (listener != null)
-                    listener.onConverting(iterator.getIndex(), task.getPdfDestination());
+                    listener.onConverting(iterator.getIndex());
                 document.addPage(iterator.generateAndNext());
             }
 
