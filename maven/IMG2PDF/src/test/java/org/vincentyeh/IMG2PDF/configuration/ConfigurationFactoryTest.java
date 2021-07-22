@@ -14,7 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ConfigurationFactoryTest {
@@ -49,10 +48,9 @@ public class ConfigurationFactoryTest {
         assertThrows(UnsupportedCharsetException.class,
                 configuration::getDirectoryListCharset);
 
-        Configuration configuration1=ConfigurationFactory.createValidOptionFromPropertiesFile(file);
+//        Configuration configuration1=ConfigurationFactory.createValidOptionFromPropertiesFile(file);
 
-        assertEquals(new DefaultConfiguration().getDirectoryListCharset(),configuration1.getDirectoryListCharset());
-        assertEquals(new DefaultConfiguration().getLocale().toLanguageTag(),configuration1.getLocale().toLanguageTag());
+//        assertEquals(new DefaultConfiguration().getLocale().toLanguageTag(),configuration1.getLocale().toLanguageTag());
     }
 
     private File createInvalidOptionProperties() throws IOException {
