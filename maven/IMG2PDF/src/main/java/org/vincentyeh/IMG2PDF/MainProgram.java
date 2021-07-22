@@ -1,8 +1,9 @@
 package org.vincentyeh.IMG2PDF;
 
 import org.fusesource.jansi.AnsiConsole;
-import org.vincentyeh.IMG2PDF.configuration.Configuration;
-import org.vincentyeh.IMG2PDF.configuration.ConfigurationFactory;
+import org.vincentyeh.IMG2PDF.concrete.commandline.MainCommandMaker;
+import org.vincentyeh.IMG2PDF.framework.configuration.Configuration;
+import org.vincentyeh.IMG2PDF.concrete.configuration.ConfigurationFactory;
 import picocli.CommandLine;
 
 import java.io.File;
