@@ -2,12 +2,12 @@ package org.vincentyeh.IMG2PDF.framework.pdf.converter;
 
 import org.vincentyeh.IMG2PDF.concrete.pdf.exception.PDFConverterException;
 import org.vincentyeh.IMG2PDF.concrete.pdf.exception.SaveException;
+import org.vincentyeh.IMG2PDF.concrete.util.file.FileUtils;
+import org.vincentyeh.IMG2PDF.concrete.util.file.exception.OverwriteException;
 import org.vincentyeh.IMG2PDF.framework.pdf.listener.ConversionListener;
 import org.vincentyeh.IMG2PDF.framework.pdf.objects.PageStepGenerator;
 import org.vincentyeh.IMG2PDF.framework.pdf.objects.PdfDocument;
 import org.vincentyeh.IMG2PDF.framework.task.Task;
-import org.vincentyeh.IMG2PDF.concrete.util.file.FileUtils;
-import org.vincentyeh.IMG2PDF.concrete.util.file.exception.OverwriteException;
 
 import java.io.File;
 
@@ -22,7 +22,7 @@ public abstract class PDFConverter {
 
     protected abstract PageStepGenerator getPageStepGenerator(Task task, PdfDocument<?> document);
 
-    protected abstract PdfDocument<?> getDocument(Task task);
+    protected abstract PdfDocument<?> getDocument();
 
     public final File start(Task task) throws PDFConverterException{
         if (task == null)
@@ -34,7 +34,7 @@ public abstract class PDFConverter {
         try {
             checkOverwrite(task.getPdfDestination());
 
-            PdfDocument<?> document = getDocument(task);
+            PdfDocument<?> document = getDocument();
             document.setOwnerPassword(task.getDocumentArgument().getOwnerPassword());
             document.setUserPassword(task.getDocumentArgument().getUserPassword());
             document.setPermission(task.getDocumentArgument().getPermission());
