@@ -5,7 +5,7 @@ import org.vincentyeh.IMG2PDF.concrete.pdf.exception.SaveException;
 import org.vincentyeh.IMG2PDF.concrete.util.file.FileUtils;
 import org.vincentyeh.IMG2PDF.concrete.util.file.exception.OverwriteException;
 import org.vincentyeh.IMG2PDF.framework.pdf.listener.ConversionListener;
-import org.vincentyeh.IMG2PDF.framework.pdf.objects.PageStepGenerator;
+import org.vincentyeh.IMG2PDF.framework.pdf.factory.InitializedPageFactory;
 import org.vincentyeh.IMG2PDF.framework.pdf.objects.PdfDocument;
 import org.vincentyeh.IMG2PDF.framework.task.Task;
 
@@ -20,7 +20,7 @@ public abstract class PDFConverter {
         this.overwrite = overwrite;
     }
 
-    protected abstract PageStepGenerator getPageStepGenerator(Task task, PdfDocument<?> document);
+    protected abstract InitializedPageFactory getPageFactory(Task task, PdfDocument<?> document);
 
     protected abstract PdfDocument<?> getDocument();
 
@@ -41,11 +41,11 @@ public abstract class PDFConverter {
             document.encrypt();
             document.setInfo(task.getDocumentArgument().getInformation());
 
-            PageStepGenerator iterator = getPageStepGenerator(task, document);
-            while (iterator.hasNext()) {
+            InitializedPageFactory factory = getPageFactory(task, document);
+            while (factory.hasNext()) {
                 if (listener != null)
-                    listener.onConverting(iterator.getIndex());
-                document.addPage(iterator.generateAndNext());
+                    listener.onConverting(factory.getIndex());
+                document.addPage(factory.generateAndNext());
             }
 
             document.save(task.getPdfDestination());

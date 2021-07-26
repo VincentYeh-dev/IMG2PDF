@@ -1,6 +1,6 @@
 package org.vincentyeh.IMG2PDF.framework.pdf.objects;
 
-import org.vincentyeh.IMG2PDF.framework.pdf.factory.Size;
+import org.vincentyeh.IMG2PDF.framework.pdf.calculation.Size;
 
 import java.io.IOException;
 

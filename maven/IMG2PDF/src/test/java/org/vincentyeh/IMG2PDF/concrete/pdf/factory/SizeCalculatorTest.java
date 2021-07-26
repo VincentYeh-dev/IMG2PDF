@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.vincentyeh.IMG2PDF.framework.pdf.factory.Size;
-import org.vincentyeh.IMG2PDF.framework.pdf.factory.SizeCalculator;
+import org.vincentyeh.IMG2PDF.framework.pdf.calculation.Size;
+import org.vincentyeh.IMG2PDF.framework.pdf.calculation.SizeCalculator;
 
 import java.util.ArrayList;
 import java.util.List;

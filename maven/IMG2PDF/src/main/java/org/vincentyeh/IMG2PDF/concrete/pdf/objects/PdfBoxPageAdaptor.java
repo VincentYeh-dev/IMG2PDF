@@ -6,7 +6,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import org.vincentyeh.IMG2PDF.framework.pdf.factory.Size;
+import org.vincentyeh.IMG2PDF.framework.pdf.calculation.Size;
 import org.vincentyeh.IMG2PDF.framework.pdf.objects.Image;
 import org.vincentyeh.IMG2PDF.framework.pdf.objects.PdfDocument;
 import org.vincentyeh.IMG2PDF.framework.pdf.objects.PdfPage;

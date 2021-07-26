@@ -1,4 +1,4 @@
-package org.vincentyeh.IMG2PDF.framework.pdf.factory;
+package org.vincentyeh.IMG2PDF.framework.pdf.calculation;
 
 public class SizeCalculator {
 
