@@ -10,7 +10,7 @@ import org.vincentyeh.IMG2PDF.concrete.pdf.exception.PDFConverterException;
 import org.vincentyeh.IMG2PDF.framework.pdf.converter.PDFConverter;
 import org.vincentyeh.IMG2PDF.concrete.pdf.listener.DefaultConversionListener;
 import org.vincentyeh.IMG2PDF.framework.parameter.*;
-import org.vincentyeh.IMG2PDF.concrete.task.factory.TextFileFactory;
+import org.vincentyeh.IMG2PDF.concrete.task.factory.FileTaskFactory;
 import org.vincentyeh.IMG2PDF.framework.task.Task;
 import org.vincentyeh.IMG2PDF.framework.task.factory.TaskListFactory;
 import org.vincentyeh.IMG2PDF.concrete.util.BytesSize;
@@ -126,7 +126,7 @@ public class ConvertCommand implements Callable<Integer> {
             try {
                 printColorFormat(getResourceBundleString("execution.convert.start.parsing") + "\n", Ansi.Color.BLUE, dirlist.getPath());
 
-                TaskListFactory factory = new TextFileFactory(dirlist, configuration.getDirectoryListCharset(), getPageArgument(), getDocumentArgument(), filter, fileSorter, new FileNameFormatter(pdf_dst));
+                TaskListFactory<?> factory = new FileTaskFactory(dirlist, configuration.getDirectoryListCharset(), getPageArgument(), getDocumentArgument(), filter, fileSorter, new FileNameFormatter(pdf_dst));
 
                 List<Task> found = factory.create();
 

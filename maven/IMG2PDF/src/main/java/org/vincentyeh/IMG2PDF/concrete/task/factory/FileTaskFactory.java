@@ -1,15 +1,12 @@
 package org.vincentyeh.IMG2PDF.concrete.task.factory;
 
-import org.vincentyeh.IMG2PDF.concrete.task.exception.TextFileException;
-import org.vincentyeh.IMG2PDF.concrete.task.factory.argument.TextLineCreateArgument;
-import org.vincentyeh.IMG2PDF.concrete.task.factory.argument.TextLineInitialArgument;
-import org.vincentyeh.IMG2PDF.framework.parameter.DocumentArgument;
-import org.vincentyeh.IMG2PDF.framework.parameter.PageArgument;
-import org.vincentyeh.IMG2PDF.framework.task.factory.CreateArgument;
-import org.vincentyeh.IMG2PDF.framework.task.factory.TaskListFactory;
+import org.vincentyeh.IMG2PDF.concrete.task.exception.FileTaskException;
 import org.vincentyeh.IMG2PDF.concrete.util.file.FileUtils;
 import org.vincentyeh.IMG2PDF.concrete.util.file.exception.WrongFileTypeException;
 import org.vincentyeh.IMG2PDF.concrete.util.interfaces.NameFormatter;
+import org.vincentyeh.IMG2PDF.framework.parameter.DocumentArgument;
+import org.vincentyeh.IMG2PDF.framework.parameter.PageArgument;
+import org.vincentyeh.IMG2PDF.framework.task.factory.TaskListFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,21 +17,22 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class TextFileFactory extends TaskListFactory {
+public class FileTaskFactory extends TaskListFactory<LineFile> {
     private final File dirlist;
     private final Charset charset;
 
-    public TextFileFactory(File dirlist, Charset charset, PageArgument argument, DocumentArgument argument1, FileFilter imageFilter, Comparator<? super File> fileSorter, NameFormatter<File> formatter) {
-        super(new TextLineTaskFactory(new TextLineInitialArgument(argument, argument1, imageFilter, fileSorter, formatter)));
+    public FileTaskFactory(File dirlist, Charset charset, PageArgument pageArgument, DocumentArgument documentArgument, FileFilter imageFilter, Comparator<? super File> fileSorter, NameFormatter<File> formatter) {
+        super(new LineTaskFactory(pageArgument, documentArgument, imageFilter, fileSorter, formatter));
         this.dirlist = dirlist;
         this.charset = charset;
     }
 
     @Override
-    protected List<CreateArgument> generateArgumentList() throws Exception {
-        List<CreateArgument> arguments = new ArrayList<>();
+    protected List<LineFile> getSourceList() throws Exception {
+        List<LineFile> sources = new ArrayList<>();
 
         List<String> lines = readAllLines(dirlist, charset);
+
         for (int index = 0; index < lines.size(); index++) {
             File raw = new File(lines.get(index));
 
@@ -44,19 +42,19 @@ public class TextFileFactory extends TaskListFactory {
             else
                 result = raw;
 
-            arguments.add(new TextLineCreateArgument(result, index + 1));
+            sources.add(new LineFile(index,result));
         }
 
-        return arguments;
+        return sources;
     }
 
 
-    private static List<String> readAllLines(File file, Charset charset) throws TextFileException {
+    private static List<String> readAllLines(File file, Charset charset) throws FileTaskException {
         try {
             FileUtils.checkExists(file);
             FileUtils.checkType(file, WrongFileTypeException.Type.FILE);
         } catch (Exception e) {
-            throw new TextFileException(file, e);
+            throw new FileTaskException(file, e);
         }
 
         try (BufferedReader reader = Files.newBufferedReader(file.toPath(), charset)) {
@@ -69,7 +67,7 @@ public class TextFileFactory extends TaskListFactory {
             }
             return result;
         } catch (Exception e) {
-            throw new TextFileException(file, e);
+            throw new FileTaskException(file, e);
         }
     }
 

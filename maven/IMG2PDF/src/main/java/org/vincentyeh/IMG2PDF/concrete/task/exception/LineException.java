@@ -2,11 +2,11 @@ package org.vincentyeh.IMG2PDF.concrete.task.exception;
 
 import java.io.File;
 
-public class TextLineException extends TextTaskFactoryException{
+public class LineException extends FileTaskFactoryException {
 
     protected final File source;
     private final int line;
-    public TextLineException(Throwable cause, File source, int line) {
+    public LineException(Throwable cause, File source, int line) {
         super(cause);
         this.line = line;
         this.source=source;

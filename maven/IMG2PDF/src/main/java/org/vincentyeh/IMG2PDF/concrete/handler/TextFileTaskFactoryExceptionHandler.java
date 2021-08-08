@@ -5,9 +5,9 @@ import org.vincentyeh.IMG2PDF.framework.handler.CantHandleException;
 import org.vincentyeh.IMG2PDF.framework.handler.ExceptionHandler;
 import org.vincentyeh.IMG2PDF.framework.handler.Handler;
 import org.vincentyeh.IMG2PDF.concrete.task.exception.EmptyImagesException;
-import org.vincentyeh.IMG2PDF.concrete.task.exception.TextFileException;
-import org.vincentyeh.IMG2PDF.concrete.task.exception.TextLineException;
-import org.vincentyeh.IMG2PDF.concrete.task.exception.TextTaskFactoryException;
+import org.vincentyeh.IMG2PDF.concrete.task.exception.FileTaskException;
+import org.vincentyeh.IMG2PDF.concrete.task.exception.LineException;
+import org.vincentyeh.IMG2PDF.concrete.task.exception.FileTaskFactoryException;
 import org.vincentyeh.IMG2PDF.concrete.util.file.FileNameFormatter;
 import org.vincentyeh.IMG2PDF.concrete.util.file.exception.FileException;
 
@@ -23,13 +23,13 @@ class TextFileTaskFactoryExceptionHandler extends ExceptionHandler {
 
     @Override
     public String handle(Exception data) throws CantHandleException {
-        if (data instanceof TextTaskFactoryException) {
-            if (data instanceof TextFileException) {
+        if (data instanceof FileTaskFactoryException) {
+            if (data instanceof FileTaskException) {
                 return "In dirlist : " + ((ExceptionHandler) new FileExceptionHandler(null,getResourceBundle())).handle((Exception) data.getCause());
             }
 
-            if (data instanceof TextLineException) {
-                TextLineException ex1 = (TextLineException) data;
+            if (data instanceof LineException) {
+                LineException ex1 = (LineException) data;
                 if (data.getCause() instanceof FileException) {
                     return targetLine(ex1.getLine(), ((ExceptionHandler) new FileExceptionHandler(null,getResourceBundle())).handle((Exception) data.getCause()));
                 } else if (ex1.getCause() instanceof EmptyImagesException) {
