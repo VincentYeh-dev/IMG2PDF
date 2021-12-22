@@ -3,6 +3,7 @@ package org.vincentyeh.IMG2PDF.concrete.commandline.command;
 import org.fusesource.jansi.Ansi;
 import org.vincentyeh.IMG2PDF.concrete.commandline.converter.*;
 import org.vincentyeh.IMG2PDF.concrete.handler.ExceptionHandlerFactory;
+import org.vincentyeh.IMG2PDF.concrete.pdf.calculation.strategy.StandardImagePageCalculationStrategy;
 import org.vincentyeh.IMG2PDF.framework.handler.CantHandleException;
 import org.vincentyeh.IMG2PDF.framework.handler.ExceptionHandler;
 import org.vincentyeh.IMG2PDF.concrete.pdf.converter.ImagePDFConverter;
@@ -229,7 +230,7 @@ public class ConvertCommand implements Callable<Integer> {
         printDebugLog(getColor("\t|- max main memory usage:" + maxMainMemoryBytes.getBytes(), Ansi.Color.CYAN));
         printDebugLog(getColor("\t|- temporary folder:" + tempFolder.getAbsolutePath(), Ansi.Color.CYAN));
         printDebugLog(getColor("\t|- Overwrite:" + overwrite_output, Ansi.Color.CYAN));
-        PDFConverter converter = new ImagePDFConverter(maxMainMemoryBytes.getBytes(), tempFolder, overwrite_output);
+        PDFConverter converter = new ImagePDFConverter(maxMainMemoryBytes.getBytes(), tempFolder, overwrite_output,new StandardImagePageCalculationStrategy());
         converter.setListener(new DefaultConversionListener(configuration.getLocale()));
 
         for (Task task : tasks) {

@@ -4,12 +4,14 @@ import org.vincentyeh.IMG2PDF.concrete.pdf.exception.PDFConverterException;
 import org.vincentyeh.IMG2PDF.concrete.pdf.exception.SaveException;
 import org.vincentyeh.IMG2PDF.concrete.util.file.FileUtils;
 import org.vincentyeh.IMG2PDF.concrete.util.file.exception.OverwriteException;
+import org.vincentyeh.IMG2PDF.framework.parameter.PageArgument;
 import org.vincentyeh.IMG2PDF.framework.pdf.listener.ConversionListener;
-import org.vincentyeh.IMG2PDF.framework.pdf.factory.InitializedPageFactory;
 import org.vincentyeh.IMG2PDF.framework.pdf.objects.PdfDocument;
+import org.vincentyeh.IMG2PDF.framework.pdf.objects.PdfPage;
 import org.vincentyeh.IMG2PDF.framework.task.Task;
 
 import java.io.File;
+import java.io.IOException;
 
 public abstract class PDFConverter {
 
@@ -20,11 +22,12 @@ public abstract class PDFConverter {
         this.overwrite = overwrite;
     }
 
-    protected abstract InitializedPageFactory getPageFactory(Task task, PdfDocument<?> document);
-
     protected abstract PdfDocument<?> getDocument();
 
-    public final File start(Task task) throws PDFConverterException{
+    protected abstract PdfPage<?> generatePage(File file, PageArgument pageArgument, PdfDocument<?> document) throws IOException;
+
+
+    public final File start(Task task) throws PDFConverterException {
         if (task == null)
             throw new IllegalArgumentException("task is null.");
 
@@ -41,11 +44,11 @@ public abstract class PDFConverter {
             document.encrypt();
             document.setInfo(task.getDocumentArgument().getInformation());
 
-            InitializedPageFactory factory = getPageFactory(task, document);
-            while (factory.hasNext()) {
+            File[] files = task.getImages();
+            for (int i = 0; i < files.length; i++) {
                 if (listener != null)
-                    listener.onConverting(factory.getIndex());
-                document.addPage(factory.generateAndNext());
+                    listener.onConverting(i);
+                document.addPage(generatePage(files[i], task.getPageArgument(), document));
             }
 
             document.save(task.getPdfDestination());
@@ -56,10 +59,10 @@ public abstract class PDFConverter {
 
             return task.getPdfDestination();
 
-        } catch (Exception e){
-            throw new PDFConverterException(e,task);
-        }finally {
-            if(listener!=null)
+        } catch (Exception e) {
+            throw new PDFConverterException(e, task);
+        } finally {
+            if (listener != null)
                 listener.onFinally();
         }
 
@@ -78,4 +81,5 @@ public abstract class PDFConverter {
     public void setListener(ConversionListener listener) {
         this.listener = listener;
     }
+
 }
