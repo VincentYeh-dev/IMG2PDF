@@ -6,9 +6,8 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.vincentyeh.IMG2PDF.framework.pdf.calculation.Position;
 import org.vincentyeh.IMG2PDF.framework.pdf.calculation.Size;
-import org.vincentyeh.IMG2PDF.framework.pdf.objects.Image;
-import org.vincentyeh.IMG2PDF.framework.pdf.objects.PdfDocument;
 import org.vincentyeh.IMG2PDF.framework.pdf.objects.PdfPage;
 
 import java.awt.image.BufferedImage;
@@ -16,9 +15,11 @@ import java.io.IOException;
 
 public class PdfBoxPageAdaptor implements PdfPage<PDPage> {
     private final PDPage page;
+    private final PDDocument document;
 
-    public PdfBoxPageAdaptor(PDPage page) {
+    public PdfBoxPageAdaptor(PDPage page, PDDocument document) {
         this.page = page;
+        this.document = document;
     }
 
     @Override
@@ -33,18 +34,17 @@ public class PdfBoxPageAdaptor implements PdfPage<PDPage> {
 
     @Override
     public Size getSize() {
-        PDRectangle rectangle=page.getMediaBox();
-        return new Size(rectangle.getWidth(),rectangle.getHeight());
+        PDRectangle rectangle = page.getMediaBox();
+        return new Size(rectangle.getWidth(), rectangle.getHeight());
     }
 
     @Override
-    public void putImage(Image<?> image, PdfDocument<?> document) throws IOException {
+    public void putImage(BufferedImage image, Position position, Size size) throws IOException {
 
-        PDDocument doc = ((PdfBoxDocumentAdaptor) document).get();
-        PDImageXObject pdImageXObject = LosslessFactory.createFromImage(doc, (BufferedImage) image.get());
+        PDImageXObject pdImageXObject = LosslessFactory.createFromImage(document, image);
 
-        PDPageContentStream contentStream = new PDPageContentStream(doc, page);
-        contentStream.drawImage(pdImageXObject, image.getPosition().getX(), image.getPosition().getY(), image.getSize().getWidth(), image.getSize().getHeight());
+        PDPageContentStream contentStream = new PDPageContentStream(document, page);
+        contentStream.drawImage(pdImageXObject, position.getX(), position.getY(), size.getWidth(), size.getHeight());
         contentStream.close();
 
     }

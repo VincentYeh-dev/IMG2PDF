@@ -1,15 +1,13 @@
 package org.vincentyeh.IMG2PDF.concrete.pdf.factory;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.vincentyeh.IMG2PDF.concrete.pdf.exception.ReadImageException;
 import org.vincentyeh.IMG2PDF.concrete.pdf.objects.PdfBoxPageAdaptor;
 import org.vincentyeh.IMG2PDF.concrete.util.file.FileUtils;
 import org.vincentyeh.IMG2PDF.framework.parameter.PageArgument;
-import org.vincentyeh.IMG2PDF.framework.pdf.calculation.Position;
-import org.vincentyeh.IMG2PDF.framework.pdf.calculation.Size;
 import org.vincentyeh.IMG2PDF.framework.pdf.calculation.strategy.ImagePageCalculateStrategy;
 import org.vincentyeh.IMG2PDF.framework.pdf.factory.InitializedPageFactory;
-import org.vincentyeh.IMG2PDF.framework.pdf.objects.Image;
 import org.vincentyeh.IMG2PDF.framework.pdf.objects.PdfDocument;
 import org.vincentyeh.IMG2PDF.framework.pdf.objects.PdfPage;
 
@@ -23,9 +21,9 @@ public class InitializedImagePageFactory implements InitializedPageFactory {
     private final PageArgument argument;
     private final File[] files;
     private int index = 0;
-    private final PdfDocument<?> document;
+    private final PdfDocument<PDDocument> document;
     private final ImagePageCalculateStrategy strategy;
-    public InitializedImagePageFactory(PageArgument argument, File[] files, PdfDocument<?> document, ImagePageCalculateStrategy strategy) {
+    public InitializedImagePageFactory(PageArgument argument, File[] files, PdfDocument<PDDocument> document, ImagePageCalculateStrategy strategy) {
         this.argument = argument;
         this.files = files;
         this.document = document;
@@ -39,31 +37,12 @@ public class InitializedImagePageFactory implements InitializedPageFactory {
 
     @Override
     public PdfPage<?> generateAndNext() throws Exception {
-        PdfPage<?> page= new PdfBoxPageAdaptor(new PDPage());
+        PdfPage<?> page= new PdfBoxPageAdaptor(new PDPage(),document.get());
         BufferedImage bufferedImage=readImage(files[index++]);
-
         strategy.study(argument,bufferedImage);
-
-        Image<BufferedImage> image =new Image<BufferedImage>() {
-            @Override
-            public BufferedImage get() {
-                return bufferedImage;
-            }
-
-            @Override
-            public Size getSize() {
-                return strategy.getImageSize();
-            }
-
-            @Override
-            public Position getPosition() {
-                return strategy.getImagePosition();
-            }
-        };
-
         page.setSize(strategy.getPageSize());
-        page.putImage(image,document);
 
+        page.putImage(bufferedImage,strategy.getImagePosition(),strategy.getImageSize());
         return page;
     }
 

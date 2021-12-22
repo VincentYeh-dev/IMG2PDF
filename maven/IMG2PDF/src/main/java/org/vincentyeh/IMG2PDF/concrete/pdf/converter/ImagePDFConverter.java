@@ -25,7 +25,7 @@ public class ImagePDFConverter extends PDFConverter {
 
     @Override
     protected InitializedPageFactory getPageFactory(Task task, PdfDocument<?> document) {
-        return new InitializedImagePageFactory(task.getPageArgument(), task.getImages(), document, new StandardImagePageCalculationStrategy());
+        return new InitializedImagePageFactory(task.getPageArgument(), task.getImages(), (PdfDocument<PDDocument>) document, new StandardImagePageCalculationStrategy());
     }
 
     @Override
