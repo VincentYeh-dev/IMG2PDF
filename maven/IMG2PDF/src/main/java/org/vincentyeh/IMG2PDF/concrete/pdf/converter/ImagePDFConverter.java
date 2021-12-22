@@ -3,6 +3,7 @@ package org.vincentyeh.IMG2PDF.concrete.pdf.converter;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.vincentyeh.IMG2PDF.concrete.pdf.calculation.strategy.StandardImagePageCalculationStrategy;
 import org.vincentyeh.IMG2PDF.concrete.pdf.exception.ReadImageException;
 import org.vincentyeh.IMG2PDF.concrete.pdf.objects.PdfBoxDocumentAdaptor;
 import org.vincentyeh.IMG2PDF.concrete.pdf.objects.PdfBoxPageAdaptor;
@@ -25,9 +26,9 @@ public class ImagePDFConverter extends PDFConverter {
     private final MemoryUsageSetting setting;
     private final ImagePageCalculateStrategy strategy;
 
-    public ImagePDFConverter(long maxMainMemoryBytes, File tempFolder, boolean overwrite, ImagePageCalculateStrategy strategy) throws MakeDirectoryException {
+    public ImagePDFConverter(long maxMainMemoryBytes, File tempFolder, boolean overwrite) throws MakeDirectoryException {
         super(overwrite);
-        this.strategy = strategy;
+        this.strategy = new StandardImagePageCalculationStrategy();
         FileUtils.makeDirectories(tempFolder);
         setting = MemoryUsageSetting.setupMixed(maxMainMemoryBytes).setTempDir(tempFolder);
     }
