@@ -1,4 +1,4 @@
-package org.vincentyeh.IMG2PDF.task.concrete.exception;
+package org.vincentyeh.IMG2PDF.task.concrete.factory.exception;
 
 
 public class EmptyImagesException extends Exception {

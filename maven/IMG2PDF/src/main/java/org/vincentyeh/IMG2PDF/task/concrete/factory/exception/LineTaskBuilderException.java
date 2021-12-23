@@ -1,4 +1,4 @@
-package org.vincentyeh.IMG2PDF.task.concrete.exception;
+package org.vincentyeh.IMG2PDF.task.concrete.factory.exception;
 
 import org.vincentyeh.IMG2PDF.task.framework.factory.exception.TaskBuilderException;
 

@@ -1,7 +1,7 @@
 package org.vincentyeh.IMG2PDF.task.concrete.factory;
 
-import org.vincentyeh.IMG2PDF.task.concrete.exception.EmptyImagesException;
-import org.vincentyeh.IMG2PDF.task.concrete.exception.LineTaskBuilderException;
+import org.vincentyeh.IMG2PDF.task.concrete.factory.exception.EmptyImagesException;
+import org.vincentyeh.IMG2PDF.task.concrete.factory.exception.LineTaskBuilderException;
 import org.vincentyeh.IMG2PDF.task.framework.factory.exception.TaskBuilderException;
 import org.vincentyeh.IMG2PDF.util.interfaces.NameFormatter;
 import org.vincentyeh.IMG2PDF.parameter.DocumentArgument;
