@@ -3,6 +3,7 @@ package org.vincentyeh.IMG2PDF.concrete.commandline.converter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.vincentyeh.IMG2PDF.commandline.converter.AbsoluteFileConverter;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;

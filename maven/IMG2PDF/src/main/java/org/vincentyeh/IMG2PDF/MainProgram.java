@@ -1,11 +1,11 @@
 package org.vincentyeh.IMG2PDF;
 
 import org.fusesource.jansi.AnsiConsole;
-import org.vincentyeh.IMG2PDF.concrete.commandline.MainCommandMaker;
-import org.vincentyeh.IMG2PDF.concrete.configuration.ConfigurationPropertiesParser;
-import org.vincentyeh.IMG2PDF.concrete.util.file.FileUtils;
-import org.vincentyeh.IMG2PDF.concrete.util.file.exception.FileNotExistsException;
-import org.vincentyeh.IMG2PDF.framework.configuration.ConfigurationParser;
+import org.vincentyeh.IMG2PDF.commandline.MainCommandMaker;
+import org.vincentyeh.IMG2PDF.configuration.concrete.ConfigurationPropertiesParser;
+import org.vincentyeh.IMG2PDF.util.file.FileUtils;
+import org.vincentyeh.IMG2PDF.util.file.exception.FileNotExistsException;
+import org.vincentyeh.IMG2PDF.configuration.framework.ConfigurationParser;
 import picocli.CommandLine;
 
 import java.io.*;

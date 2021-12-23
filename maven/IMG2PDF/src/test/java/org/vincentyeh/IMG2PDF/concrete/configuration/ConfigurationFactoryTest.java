@@ -1,19 +1,5 @@
 package org.vincentyeh.IMG2PDF.concrete.configuration;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullSource;
-import org.vincentyeh.IMG2PDF.concrete.util.file.exception.FileNotExistsException;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.charset.UnsupportedCharsetException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Properties;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ConfigurationFactoryTest {
