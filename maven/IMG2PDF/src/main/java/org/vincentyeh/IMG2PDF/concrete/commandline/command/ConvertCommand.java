@@ -3,7 +3,7 @@ package org.vincentyeh.IMG2PDF.concrete.commandline.command;
 import org.fusesource.jansi.Ansi;
 import org.vincentyeh.IMG2PDF.concrete.commandline.converter.*;
 import org.vincentyeh.IMG2PDF.concrete.handler.ExceptionHandlerFactory;
-import org.vincentyeh.IMG2PDF.concrete.pdf.calculation.strategy.StandardImagePageCalculationStrategy;
+import org.vincentyeh.IMG2PDF.framework.configuration.ConfigurationParser;
 import org.vincentyeh.IMG2PDF.framework.handler.CantHandleException;
 import org.vincentyeh.IMG2PDF.framework.handler.ExceptionHandler;
 import org.vincentyeh.IMG2PDF.concrete.pdf.converter.ImagePDFConverter;
@@ -26,10 +26,8 @@ import java.awt.*;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.Callable;
 
 import static org.vincentyeh.IMG2PDF.concrete.util.PrinterUtils.*;
@@ -92,16 +90,12 @@ public class ConvertCommand implements Callable<Integer> {
     List<File> sourceFiles;
 
 
-    private final Configuration configuration;
+    private final Charset dir_list_read_charset;
+    private final Locale locale;
 
-    public interface Configuration {
-        Charset getDirectoryListCharset();
-
-        Locale getLocale();
-    }
-
-    public ConvertCommand(Configuration configuration) {
-        this.configuration = configuration;
+    public ConvertCommand(Map<ConfigurationParser.ConfigParam, Object> config) {
+        dir_list_read_charset = (Charset) config.get(ConfigurationParser.ConfigParam.DIR_LIST_READ_CHARSET);
+        locale=(Locale) config.get(ConfigurationParser.ConfigParam.LOCALE);
     }
 
     @Override
@@ -127,7 +121,7 @@ public class ConvertCommand implements Callable<Integer> {
             try {
                 printColorFormat(getResourceBundleString("execution.convert.start.parsing") + "\n", Ansi.Color.BLUE, dirlist.getPath());
 
-                TaskListFactory<?> factory = new FileTaskFactory(dirlist, configuration.getDirectoryListCharset(), getPageArgument(), getDocumentArgument(), filter, fileSorter, new FileNameFormatter(pdf_dst));
+                TaskListFactory<?> factory = new FileTaskFactory(dirlist,dir_list_read_charset, getPageArgument(), getDocumentArgument(), filter, fileSorter, new FileNameFormatter(pdf_dst));
 
                 List<Task> found = factory.create();
 
@@ -231,7 +225,7 @@ public class ConvertCommand implements Callable<Integer> {
         printDebugLog(getColor("\t|- temporary folder:" + tempFolder.getAbsolutePath(), Ansi.Color.CYAN));
         printDebugLog(getColor("\t|- Overwrite:" + overwrite_output, Ansi.Color.CYAN));
         PDFConverter converter = new ImagePDFConverter(maxMainMemoryBytes.getBytes(), tempFolder, overwrite_output);
-        converter.setListener(new DefaultConversionListener(configuration.getLocale()));
+        converter.setListener(new DefaultConversionListener(locale));
 
         for (Task task : tasks) {
             File result = convertToFile(converter, task);

@@ -1,44 +1,32 @@
 package org.vincentyeh.IMG2PDF.concrete.configuration;
 
-import org.vincentyeh.IMG2PDF.framework.configuration.Configuration;
-import org.vincentyeh.IMG2PDF.concrete.util.file.FileUtils;
-import org.vincentyeh.IMG2PDF.concrete.util.file.exception.WrongFileTypeException;
+import org.vincentyeh.IMG2PDF.framework.configuration.ConfigurationParser;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 
-class ConfigPropertiesAdaptor implements Configuration {
+public class ConfigurationPropertiesParser implements ConfigurationParser {
+
     private static final Locale[] supportedLocales = {
-            Locale.TRADITIONAL_CHINESE
+            Locale.TRADITIONAL_CHINESE,
+            Locale.US
     };
 
-    private final Properties properties;
-
-    public ConfigPropertiesAdaptor(File file) throws IOException {
-        if (file == null)
-            throw new IllegalArgumentException("file==null");
-        properties = new Properties();
-        FileUtils.checkExists(file);
-        FileUtils.checkType(file, WrongFileTypeException.Type.FILE);
-
-        FileInputStream fis = new FileInputStream(file);
-        properties.load(fis);
-        fis.close();
-    }
-
-    public ConfigPropertiesAdaptor(Properties properties) {
+    @Override
+    public <T> Map<ConfigParam, Object> parse(T properties) {
         if (properties == null)
             throw new IllegalArgumentException("properties==null");
-        this.properties = properties;
+
+        Map<ConfigParam, Object> map = new HashMap<>();
+        map.put(ConfigParam.DIR_LIST_READ_CHARSET, getDirectoryListCharset((Properties) properties));
+        map.put(ConfigParam.LOCALE, getLocale((Properties) properties));
+        return map;
     }
 
-
-    @Override
-    public Charset getDirectoryListCharset() {
+    public Charset getDirectoryListCharset(Properties properties) {
         String value = properties.getProperty("dirlist-read-charset");
         if (value == null) {
             throw new PropertiesNotFoundException("dirlist-read-charset");
@@ -47,8 +35,7 @@ class ConfigPropertiesAdaptor implements Configuration {
         return Charset.forName(value);
     }
 
-    @Override
-    public Locale getLocale() throws LanguageNotSupportException {
+    public Locale getLocale(Properties properties) throws LanguageNotSupportException {
         String value = properties.getProperty("language");
         if (value == null) {
             throw new PropertiesNotFoundException("language");
@@ -81,6 +68,12 @@ class ConfigPropertiesAdaptor implements Configuration {
 
         public String getProperty() {
             return property;
+        }
+    }
+
+    static class LanguageNotSupportException extends RuntimeException {
+        public LanguageNotSupportException(String message) {
+            super(message);
         }
     }
 }
