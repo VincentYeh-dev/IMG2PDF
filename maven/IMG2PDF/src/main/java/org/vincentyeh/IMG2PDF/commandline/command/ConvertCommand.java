@@ -3,20 +3,17 @@ package org.vincentyeh.IMG2PDF.commandline.command;
 import org.fusesource.jansi.Ansi;
 import org.vincentyeh.IMG2PDF.commandline.converter.*;
 import org.vincentyeh.IMG2PDF.handler.ExceptionHandlerFacade;
+import org.vincentyeh.IMG2PDF.pdf.PDFacade;
 import org.vincentyeh.IMG2PDF.pdf.framework.converter.exception.PDFConversionException;
 import org.vincentyeh.IMG2PDF.task.TaskListFactoryFacade;
-import org.vincentyeh.IMG2PDF.task.concrete.factory.LineTaskBuilder;
 import org.vincentyeh.IMG2PDF.configuration.framework.ConfigurationParser;
 import org.vincentyeh.IMG2PDF.handler.framework.CantHandleException;
 import org.vincentyeh.IMG2PDF.handler.framework.ExceptionHandler;
-import org.vincentyeh.IMG2PDF.pdf.concrete.converter.ImagePDFConverter;
 import org.vincentyeh.IMG2PDF.pdf.framework.converter.PDFConverter;
 import org.vincentyeh.IMG2PDF.pdf.concrete.listener.DefaultConversionListener;
-import org.vincentyeh.IMG2PDF.task.concrete.factory.DirectoryTaskListFactory;
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 import org.vincentyeh.IMG2PDF.task.framework.factory.TaskListFactory;
 import org.vincentyeh.IMG2PDF.util.BytesSize;
-import org.vincentyeh.IMG2PDF.util.file.FileNameFormatter;
 import org.vincentyeh.IMG2PDF.util.file.FileSorter;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
 import org.vincentyeh.IMG2PDF.util.file.GlobbingFileFilter;
@@ -222,8 +219,7 @@ public class ConvertCommand implements Callable<Integer> {
         printDebugLog(getColor("\t|- max main memory usage:" + maxMainMemoryBytes.getBytes(), Ansi.Color.CYAN));
         printDebugLog(getColor("\t|- temporary folder:" + tempFolder.getAbsolutePath(), Ansi.Color.CYAN));
         printDebugLog(getColor("\t|- Overwrite:" + overwrite_output, Ansi.Color.CYAN));
-        PDFConverter converter = new ImagePDFConverter(maxMainMemoryBytes.getBytes(), tempFolder, overwrite_output);
-        converter.setListener(new DefaultConversionListener(locale));
+        PDFConverter converter = PDFacade.createImagePDFConverter(maxMainMemoryBytes, tempFolder, overwrite_output, new DefaultConversionListener(locale));
 
         for (Task task : tasks) {
             File result = convertToFile(converter, task);

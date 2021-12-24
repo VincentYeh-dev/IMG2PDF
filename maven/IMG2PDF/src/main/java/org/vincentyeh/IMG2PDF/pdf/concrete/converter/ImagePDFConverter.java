@@ -26,9 +26,9 @@ public class ImagePDFConverter extends PDFConverter {
     private final MemoryUsageSetting setting;
     private final ImagePageCalculateStrategy strategy;
 
-    public ImagePDFConverter(long maxMainMemoryBytes, File tempFolder, boolean overwrite) throws MakeDirectoryException {
+    public ImagePDFConverter(long maxMainMemoryBytes, File tempFolder, boolean overwrite,ImagePageCalculateStrategy strategy) throws MakeDirectoryException {
         super(overwrite);
-        this.strategy = new StandardImagePageCalculationStrategy();
+        this.strategy = strategy;
         FileUtils.makeDirectories(tempFolder);
         setting = MemoryUsageSetting.setupMixed(maxMainMemoryBytes).setTempDir(tempFolder);
     }
