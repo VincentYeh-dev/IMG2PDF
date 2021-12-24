@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
-class ParameterExceptionHandler extends ExceptionHandler {
+public class ParameterExceptionHandler extends ExceptionHandler {
 
     public ParameterExceptionHandler(Handler<String, Exception> next, ResourceBundle resourceBundle) {
         super(next, "parameter",resourceBundle);

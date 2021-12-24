@@ -15,9 +15,9 @@ import java.util.ResourceBundle;
 
 import static java.lang.String.format;
 
-class TextFileTaskFactoryExceptionHandler extends ExceptionHandler {
+public class LineFileTaskFactoryExceptionHandler extends ExceptionHandler {
 
-    public TextFileTaskFactoryExceptionHandler(Handler<String, Exception> next, ResourceBundle resourceBundle) {
+    public LineFileTaskFactoryExceptionHandler(Handler<String, Exception> next, ResourceBundle resourceBundle) {
         super(next, "dirlist_task_factory", resourceBundle);
     }
 

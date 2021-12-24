@@ -2,7 +2,7 @@ package org.vincentyeh.IMG2PDF.commandline.command;
 
 import org.fusesource.jansi.Ansi;
 import org.vincentyeh.IMG2PDF.commandline.converter.*;
-import org.vincentyeh.IMG2PDF.handler.concrete.ExceptionHandlerFactory;
+import org.vincentyeh.IMG2PDF.handler.ExceptionHandlerFacade;
 import org.vincentyeh.IMG2PDF.pdf.framework.converter.exception.PDFConversionException;
 import org.vincentyeh.IMG2PDF.task.concrete.factory.LineTaskBuilder;
 import org.vincentyeh.IMG2PDF.configuration.framework.ConfigurationParser;
@@ -130,7 +130,7 @@ public class ConvertCommand implements Callable<Integer> {
                 tasks.addAll(found);
 
             } catch (Exception e) {
-                handleException(e, ExceptionHandlerFactory.getTextFileTaskFactoryExceptionHandler(null), "\t", "");
+                handleException(e, ExceptionHandlerFacade.getTextFileTaskFactoryExceptionHandler(null), "\t", "");
             }
         }
         return tasks;
@@ -260,7 +260,7 @@ public class ConvertCommand implements Callable<Integer> {
         try {
             return converter.start(task);
         } catch (PDFConversionException e) {
-            handleException(e, ExceptionHandlerFactory.getPDFConversionExceptionHandler(null), "\t", "");
+            handleException(e, ExceptionHandlerFacade.getPDFConversionExceptionHandler(null), "\t", "");
         } catch (Exception e) {
             printStackTrance(e);
         }

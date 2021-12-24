@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 import static java.lang.String.format;
 
-class PDFConversionExceptionHandler extends ExceptionHandler {
+public class PDFConversionExceptionHandler extends ExceptionHandler {
 
     public PDFConversionExceptionHandler(Handler<String, Exception> next, ResourceBundle resourceBundle) {
         super(next, "conversion", resourceBundle);

@@ -2,7 +2,7 @@ package org.vincentyeh.IMG2PDF.commandline;
 
 import org.fusesource.jansi.Ansi;
 import org.vincentyeh.IMG2PDF.handler.framework.ExceptionHandler;
-import org.vincentyeh.IMG2PDF.handler.concrete.ExceptionHandlerFactory;
+import org.vincentyeh.IMG2PDF.handler.ExceptionHandlerFacade;
 import org.vincentyeh.IMG2PDF.handler.framework.CantHandleException;
 import picocli.CommandLine;
 
@@ -11,7 +11,7 @@ import static org.vincentyeh.IMG2PDF.util.PrinterUtils.*;
 public class CommandLineParameterHandlerAdaptor implements CommandLine.IParameterExceptionHandler {
     private final ExceptionHandler handler;
     public CommandLineParameterHandlerAdaptor() {
-        handler = ExceptionHandlerFactory.getParameterExceptionHandler(null);
+        handler = ExceptionHandlerFacade.getParameterExceptionHandler(null);
     }
 
     @Override
