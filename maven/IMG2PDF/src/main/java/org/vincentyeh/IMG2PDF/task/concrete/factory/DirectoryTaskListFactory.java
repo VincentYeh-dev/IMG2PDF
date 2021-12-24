@@ -14,29 +14,27 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DirectoryTaskListFactory extends TaskListFactory<LineFile> {
-    private final File dirlist;
+public class DirectoryTaskListFactory extends TaskListFactory<LineFile,File> {
     private final Charset charset;
 
-    public DirectoryTaskListFactory(File dirlist, Charset charset, TaskBuilder<LineFile> builder) {
+    public DirectoryTaskListFactory(Charset charset, TaskBuilder<LineFile> builder) {
         super(builder);
-        this.dirlist = dirlist;
         this.charset = charset;
     }
 
     @Override
-    protected List<LineFile> getSourceList() throws TaskListFactoryException {
+    protected List<LineFile> getSources(File directoryList) throws TaskListFactoryException {
         try {
             List<LineFile> sources = new ArrayList<>();
 
-            List<String> lines = readAllLines(dirlist, charset);
+            List<String> lines = readAllLines(directoryList, charset);
 
             for (int index = 0; index < lines.size(); index++) {
                 File raw = new File(lines.get(index));
 
                 File result;
                 if (!raw.isAbsolute())
-                    result = new File(FileUtils.getExistedParentFile(dirlist), lines.get(index)).getAbsoluteFile();
+                    result = new File(FileUtils.getExistedParentFile(directoryList), lines.get(index)).getAbsoluteFile();
                 else
                     result = raw;
 
@@ -45,7 +43,7 @@ public class DirectoryTaskListFactory extends TaskListFactory<LineFile> {
 
             return sources;
         } catch (Exception e) {
-            throw new TaskListFactoryException(dirlist, e);
+            throw new TaskListFactoryException(directoryList, e);
         }
     }
 

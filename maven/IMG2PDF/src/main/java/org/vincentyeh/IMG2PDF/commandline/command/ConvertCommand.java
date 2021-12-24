@@ -4,6 +4,7 @@ import org.fusesource.jansi.Ansi;
 import org.vincentyeh.IMG2PDF.commandline.converter.*;
 import org.vincentyeh.IMG2PDF.handler.ExceptionHandlerFacade;
 import org.vincentyeh.IMG2PDF.pdf.framework.converter.exception.PDFConversionException;
+import org.vincentyeh.IMG2PDF.task.TaskListFactoryFacade;
 import org.vincentyeh.IMG2PDF.task.concrete.factory.LineTaskBuilder;
 import org.vincentyeh.IMG2PDF.configuration.framework.ConfigurationParser;
 import org.vincentyeh.IMG2PDF.handler.framework.CantHandleException;
@@ -117,18 +118,15 @@ public class ConvertCommand implements Callable<Integer> {
     }
 
     private List<Task> importAllTaskFromDirlists() {
-        List<Task> tasks = new ArrayList<>();
-        for (File dirlist : sourceFiles) {
+        List<Task> tasks = new LinkedList<>();
+        TaskListFactory<?, File> factory = TaskListFactoryFacade.createDirectoryTaskListFactory(dir_list_read_charset, getDocumentArgument(), getPageArgument(), filter, fileSorter, pdf_dst);
+
+        for (File directoryList : sourceFiles) {
             try {
-                printColorFormat(getResourceBundleString("execution.convert.start.parsing") + "\n", Ansi.Color.BLUE, dirlist.getPath());
-                TaskListFactory<?> factory = new DirectoryTaskListFactory(dirlist, dir_list_read_charset, new LineTaskBuilder(getDocumentArgument(), getPageArgument(), filter, fileSorter, new FileNameFormatter(pdf_dst)));
-
-                List<Task> found = factory.create();
-
-                printColorFormat(getResourceBundleString("execution.convert.start.parsed") + "\n", Ansi.Color.BLUE, found.size(), dirlist.getPath());
-
+                printColorFormat(getResourceBundleString("execution.convert.start.parsing") + "\n", Ansi.Color.BLUE, directoryList.getPath());
+                List<Task> found = factory.create(directoryList);
+                printColorFormat(getResourceBundleString("execution.convert.start.parsed") + "\n", Ansi.Color.BLUE, found.size(), directoryList.getPath());
                 tasks.addAll(found);
-
             } catch (Exception e) {
                 handleException(e, ExceptionHandlerFacade.getTextFileTaskFactoryExceptionHandler(null), "\t", "");
             }
