@@ -1,8 +1,9 @@
-package org.vincentyeh.IMG2PDF.pdf.concrete.exception;
+package org.vincentyeh.IMG2PDF.pdf.framework.converter.exception;
 
 import java.io.File;
+import java.io.IOException;
 
-public class ReadImageException extends RuntimeException{
+public class ReadImageException extends IOException {
     private final File image_file;
     public ReadImageException(Throwable cause, File image_file) {
         super(cause);

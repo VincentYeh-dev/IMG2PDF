@@ -3,12 +3,12 @@ package org.vincentyeh.IMG2PDF.commandline.command;
 import org.fusesource.jansi.Ansi;
 import org.vincentyeh.IMG2PDF.commandline.converter.*;
 import org.vincentyeh.IMG2PDF.handler.concrete.ExceptionHandlerFactory;
+import org.vincentyeh.IMG2PDF.pdf.framework.converter.exception.PDFConversionException;
 import org.vincentyeh.IMG2PDF.task.concrete.factory.LineTaskBuilder;
 import org.vincentyeh.IMG2PDF.configuration.framework.ConfigurationParser;
 import org.vincentyeh.IMG2PDF.handler.framework.CantHandleException;
 import org.vincentyeh.IMG2PDF.handler.framework.ExceptionHandler;
 import org.vincentyeh.IMG2PDF.pdf.concrete.converter.ImagePDFConverter;
-import org.vincentyeh.IMG2PDF.pdf.concrete.exception.PDFConverterException;
 import org.vincentyeh.IMG2PDF.pdf.framework.converter.PDFConverter;
 import org.vincentyeh.IMG2PDF.pdf.concrete.listener.DefaultConversionListener;
 import org.vincentyeh.IMG2PDF.task.concrete.factory.DirectoryTaskListFactory;
@@ -259,8 +259,8 @@ public class ConvertCommand implements Callable<Integer> {
         Arrays.stream(task.getImages()).forEach(img -> printDebugLog(getColor("\t|- " + img, Ansi.Color.CYAN)));
         try {
             return converter.start(task);
-        } catch (PDFConverterException e) {
-            handleException(e, ExceptionHandlerFactory.getPDFConverterExceptionHandler(null), "\t", "");
+        } catch (PDFConversionException e) {
+            handleException(e, ExceptionHandlerFactory.getPDFConversionExceptionHandler(null), "\t", "");
         } catch (Exception e) {
             printStackTrance(e);
         }

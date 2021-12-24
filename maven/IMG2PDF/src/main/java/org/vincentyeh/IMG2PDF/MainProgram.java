@@ -24,6 +24,8 @@ public class MainProgram {
             configuration = loadConfiguration("config.properties");
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Config file error");
+            System.exit(2);
         }
 
         int exitCode;

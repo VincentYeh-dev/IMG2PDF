@@ -1,7 +1,8 @@
 package org.vincentyeh.IMG2PDF.pdf.framework.converter;
 
-import org.vincentyeh.IMG2PDF.pdf.concrete.exception.PDFConverterException;
-import org.vincentyeh.IMG2PDF.pdf.concrete.exception.SaveException;
+import org.apache.pdfbox.contentstream.operator.state.Save;
+import org.vincentyeh.IMG2PDF.pdf.framework.converter.exception.PDFConversionException;
+import org.vincentyeh.IMG2PDF.pdf.framework.converter.exception.SaveException;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
 import org.vincentyeh.IMG2PDF.util.file.exception.OverwriteException;
 import org.vincentyeh.IMG2PDF.parameter.PageArgument;
@@ -27,7 +28,7 @@ public abstract class PDFConverter {
     protected abstract PdfPage<?> generatePage(File file, PageArgument pageArgument, PdfDocument<?> document) throws IOException;
 
 
-    public final File start(Task task) throws PDFConverterException {
+    public final File start(Task task) throws PDFConversionException {
         if (task == null)
             throw new IllegalArgumentException("task is null.");
 
@@ -51,16 +52,20 @@ public abstract class PDFConverter {
                 document.addPage(generatePage(files[i], task.getPageArgument(), document));
             }
 
-            document.save(task.getPdfDestination());
+            try {
+                document.save(task.getPdfDestination());
+            } catch (IOException e) {
+                throw new SaveException(e,task.getPdfDestination());
+            }
+
             document.close();
 
             if (listener != null)
                 listener.onConversionComplete();
 
             return task.getPdfDestination();
-
         } catch (Exception e) {
-            throw new PDFConverterException(e, task);
+            throw new PDFConversionException(task, e);
         } finally {
             if (listener != null)
                 listener.onFinally();
@@ -73,7 +78,7 @@ public abstract class PDFConverter {
             try {
                 FileUtils.checkOverwrite(file, "PDF overwrite deny,File is already exists:" + file.getAbsoluteFile());
             } catch (OverwriteException e) {
-                throw new SaveException(e);
+                throw new SaveException(e, file);
             }
         }
     }

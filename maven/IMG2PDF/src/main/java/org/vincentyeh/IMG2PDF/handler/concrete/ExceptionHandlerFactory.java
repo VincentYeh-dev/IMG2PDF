@@ -11,8 +11,8 @@ public class ExceptionHandlerFactory {
         return new ParameterExceptionHandler(next,resourceBundle);
     }
 
-    public static PDFConverterExceptionHandler getPDFConverterExceptionHandler(ExceptionHandler  next){
-        return new PDFConverterExceptionHandler(next,resourceBundle);
+    public static PDFConversionExceptionHandler getPDFConversionExceptionHandler(ExceptionHandler  next){
+        return new PDFConversionExceptionHandler(next,resourceBundle);
     }
 
     public static ExceptionHandler getTextFileTaskFactoryExceptionHandler(ExceptionHandler next){
