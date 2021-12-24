@@ -117,13 +117,13 @@ public class ConvertCommand implements Callable<Integer> {
     private List<Task> importAllTaskFromDirlists() {
         List<Task> tasks = new LinkedList<>();
         TaskListFactory<?, File> factory = TaskListFactoryFacade.createDirectoryTaskListFactory(dir_list_read_charset, getDocumentArgument(), getPageArgument(), filter, fileSorter, pdf_dst);
-
+        int previous_size = 0;
         for (File directoryList : sourceFiles) {
             try {
                 printColorFormat(getResourceBundleString("execution.convert.start.parsing") + "\n", Ansi.Color.BLUE, directoryList.getPath());
-                List<Task> found = factory.create(directoryList);
-                printColorFormat(getResourceBundleString("execution.convert.start.parsed") + "\n", Ansi.Color.BLUE, found.size(), directoryList.getPath());
-                tasks.addAll(found);
+                factory.createTo(directoryList, tasks);
+                printColorFormat(getResourceBundleString("execution.convert.start.parsed") + "\n", Ansi.Color.BLUE, tasks.size() - previous_size, directoryList.getPath());
+                previous_size = tasks.size();
             } catch (Exception e) {
                 handleException(e, ExceptionHandlerFacade.getTextFileTaskFactoryExceptionHandler(null), "\t", "");
             }
