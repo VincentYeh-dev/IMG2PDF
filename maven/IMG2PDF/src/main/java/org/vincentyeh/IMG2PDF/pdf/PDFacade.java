@@ -1,5 +1,6 @@
 package org.vincentyeh.IMG2PDF.pdf;
 
+import org.vincentyeh.IMG2PDF.image.reader.create.FixedImageReader;
 import org.vincentyeh.IMG2PDF.pdf.concrete.calculation.strategy.StandardImagePageCalculationStrategy;
 import org.vincentyeh.IMG2PDF.pdf.concrete.converter.ImagePDFConverter;
 import org.vincentyeh.IMG2PDF.pdf.framework.converter.PDFConverter;
@@ -14,7 +15,7 @@ public class PDFacade {
     }
 
     public static PDFConverter createImagePDFConverter(long bytes_count, File tempFolder, boolean overwrite_output, ConversionListener listener) throws MakeDirectoryException {
-        PDFConverter converter = new ImagePDFConverter(bytes_count, tempFolder, overwrite_output, new StandardImagePageCalculationStrategy());
+        PDFConverter converter = new ImagePDFConverter(bytes_count, tempFolder, overwrite_output, new StandardImagePageCalculationStrategy(),new FixedImageReader());
         converter.setListener(listener);
         return converter;
     }
