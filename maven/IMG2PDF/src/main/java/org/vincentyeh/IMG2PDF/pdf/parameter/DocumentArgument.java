@@ -1,40 +1,40 @@
 package org.vincentyeh.IMG2PDF.pdf.parameter;
 
-public class DocumentArgument {
+public final class DocumentArgument {
     private String ownerPassword;
     private String userPassword;
     private Permission permission;
     private PDFDocumentInfo info;
 
-    public final String getOwnerPassword(){
+    public String getOwnerPassword() {
         return ownerPassword;
     }
 
-    public final String getUserPassword(){
+    public String getUserPassword() {
         return userPassword;
     }
 
-    public final Permission getPermission(){
+    public Permission getPermission() {
         return permission;
     }
 
-    public final PDFDocumentInfo getInformation(){
+    public PDFDocumentInfo getInformation() {
         return info;
     }
 
-    public final void setInformation(PDFDocumentInfo info) {
+    public void setInformation(PDFDocumentInfo info) {
         this.info = info;
     }
 
-    public final void setOwnerPassword(String ownerPassword) {
+    public void setOwnerPassword(String ownerPassword) {
         this.ownerPassword = ownerPassword;
     }
 
-    public final void setUserPassword(String userPassword) {
+    public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
     }
 
-    public final void setPermission(Permission permission) {
+    public void setPermission(Permission permission) {
         this.permission = permission;
     }
 }

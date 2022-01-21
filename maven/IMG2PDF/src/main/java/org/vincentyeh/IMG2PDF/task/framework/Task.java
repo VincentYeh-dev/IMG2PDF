@@ -19,19 +19,19 @@ public final class Task {
         this.destination = destination;
     }
 
-    public final DocumentArgument getDocumentArgument() {
+    public DocumentArgument getDocumentArgument() {
         return documentArgument;
     }
 
-    public final PageArgument getPageArgument() {
+    public PageArgument getPageArgument() {
         return pageArgument;
     }
 
-    public final File[] getImages() {
+    public File[] getImages() {
         return images;
     }
 
-    public final File getPdfDestination() {
+    public File getPdfDestination() {
         return destination;
     }
 }

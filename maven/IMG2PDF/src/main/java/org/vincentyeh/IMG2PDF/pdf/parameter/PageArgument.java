@@ -1,42 +1,42 @@
 package org.vincentyeh.IMG2PDF.pdf.parameter;
 
 
-public class PageArgument {
+public final class PageArgument {
     private PageAlign align;
     private PageSize size;
     private PageDirection direction;
     private boolean autoRotate;
 
 
-    public final PageAlign getAlign() {
+    public PageAlign getAlign() {
         return align;
     }
 
-    public final PageSize getSize() {
+    public PageSize getSize() {
         return size;
     }
 
-    public final PageDirection getDirection() {
+    public PageDirection getDirection() {
         return direction;
     }
 
-    public final boolean autoRotate() {
+    public boolean autoRotate() {
         return autoRotate;
     }
 
-    public final void setAlign(PageAlign align) {
+    public void setAlign(PageAlign align) {
         this.align = align;
     }
 
-    public final void setSize(PageSize size) {
+    public void setSize(PageSize size) {
         this.size = size;
     }
 
-    public final void setDirection(PageDirection direction) {
+    public void setDirection(PageDirection direction) {
         this.direction = direction;
     }
 
-    public final void setAutoRotate(boolean autoRotate) {
+    public void setAutoRotate(boolean autoRotate) {
         this.autoRotate = autoRotate;
     }
 }

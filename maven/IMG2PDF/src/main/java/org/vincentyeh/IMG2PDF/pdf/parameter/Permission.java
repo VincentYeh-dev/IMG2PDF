@@ -1,6 +1,6 @@
 package org.vincentyeh.IMG2PDF.pdf.parameter;
 
-public class Permission {
+public final class Permission {
     private boolean canAssembleDocument;
     private boolean canExtractContent;
     private boolean canExtractForAccessibility;
@@ -10,67 +10,67 @@ public class Permission {
     private boolean canPrint;
     private boolean canPrintDegraded;
 
-    public final boolean getCanAssembleDocument(){
+    public boolean getCanAssembleDocument() {
         return canAssembleDocument;
     }
 
-    public final boolean getCanExtractContent(){
+    public boolean getCanExtractContent() {
         return canExtractContent;
     }
 
-    public final boolean getCanExtractForAccessibility(){
+    public boolean getCanExtractForAccessibility() {
         return canExtractForAccessibility;
     }
 
-    public final boolean getCanFillInForm(){
+    public boolean getCanFillInForm() {
         return canFillInForm;
     }
 
-    public final boolean getCanModify(){
+    public boolean getCanModify() {
         return canModify;
     }
 
-    public final boolean getCanModifyAnnotations(){
+    public boolean getCanModifyAnnotations() {
         return canModifyAnnotations;
     }
 
-    public final boolean getCanPrint(){
+    public boolean getCanPrint() {
         return canPrint;
     }
 
-    public final boolean getCanPrintDegraded(){
+    public boolean getCanPrintDegraded() {
         return canPrintDegraded;
     }
 
-    public final void setCanAssembleDocument(boolean canAssembleDocument) {
+    public void setCanAssembleDocument(boolean canAssembleDocument) {
         this.canAssembleDocument = canAssembleDocument;
     }
 
-    public final void setCanExtractContent(boolean canExtractContent) {
+    public void setCanExtractContent(boolean canExtractContent) {
         this.canExtractContent = canExtractContent;
     }
 
-    public final void setCanExtractForAccessibility(boolean canExtractForAccessibility) {
+    public void setCanExtractForAccessibility(boolean canExtractForAccessibility) {
         this.canExtractForAccessibility = canExtractForAccessibility;
     }
 
-    public final void setCanFillInForm(boolean canFillInForm) {
+    public void setCanFillInForm(boolean canFillInForm) {
         this.canFillInForm = canFillInForm;
     }
 
-    public final void setCanModify(boolean canModify) {
+    public void setCanModify(boolean canModify) {
         this.canModify = canModify;
     }
 
-    public final void setCanModifyAnnotations(boolean canModifyAnnotations) {
+    public void setCanModifyAnnotations(boolean canModifyAnnotations) {
         this.canModifyAnnotations = canModifyAnnotations;
     }
 
-    public final void setCanPrint(boolean canPrint) {
+    public void setCanPrint(boolean canPrint) {
         this.canPrint = canPrint;
     }
 
-    public final void setCanPrintDegraded(boolean canPrintDegraded) {
+    public void setCanPrintDegraded(boolean canPrintDegraded) {
         this.canPrintDegraded = canPrintDegraded;
     }
 }

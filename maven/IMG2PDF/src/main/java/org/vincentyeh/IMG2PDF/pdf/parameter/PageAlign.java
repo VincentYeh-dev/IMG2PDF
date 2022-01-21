@@ -6,7 +6,7 @@ package org.vincentyeh.IMG2PDF.pdf.parameter;
  * 
  * @author vincent
  */
-public class PageAlign {
+public final class PageAlign {
 //	水平對齊
 	private final HorizontalAlign hori_align;
 //	垂直對齊
