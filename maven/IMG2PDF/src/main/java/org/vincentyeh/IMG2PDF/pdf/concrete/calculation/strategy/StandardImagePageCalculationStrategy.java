@@ -1,10 +1,10 @@
 package org.vincentyeh.IMG2PDF.pdf.concrete.calculation.strategy;
 
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.vincentyeh.IMG2PDF.parameter.PageAlign;
-import org.vincentyeh.IMG2PDF.parameter.PageArgument;
-import org.vincentyeh.IMG2PDF.parameter.PageDirection;
-import org.vincentyeh.IMG2PDF.parameter.PageSize;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageAlign;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageSize;
 import org.vincentyeh.IMG2PDF.pdf.framework.calculation.Position;
 import org.vincentyeh.IMG2PDF.pdf.framework.calculation.PositionCalculator;
 import org.vincentyeh.IMG2PDF.pdf.framework.calculation.Size;
@@ -13,8 +13,8 @@ import org.vincentyeh.IMG2PDF.pdf.framework.calculation.strategy.ImagePageCalcul
 
 import java.awt.image.BufferedImage;
 
-import static org.vincentyeh.IMG2PDF.parameter.PageDirection.Landscape;
-import static org.vincentyeh.IMG2PDF.parameter.PageDirection.Portrait;
+import static org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection.Landscape;
+import static org.vincentyeh.IMG2PDF.pdf.parameter.PageDirection.Portrait;
 
 public class StandardImagePageCalculationStrategy implements ImagePageCalculateStrategy {
     private Size pageSize;

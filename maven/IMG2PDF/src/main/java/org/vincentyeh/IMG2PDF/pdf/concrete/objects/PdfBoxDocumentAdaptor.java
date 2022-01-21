@@ -6,8 +6,8 @@ import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 import org.vincentyeh.IMG2PDF.pdf.framework.objects.PdfDocument;
 import org.vincentyeh.IMG2PDF.pdf.framework.objects.PdfPage;
-import org.vincentyeh.IMG2PDF.parameter.PDFDocumentInfo;
-import org.vincentyeh.IMG2PDF.parameter.Permission;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PDFDocumentInfo;
+import org.vincentyeh.IMG2PDF.pdf.parameter.Permission;
 
 import java.io.File;
 import java.io.IOException;

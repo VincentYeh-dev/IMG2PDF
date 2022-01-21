@@ -1,8 +1,8 @@
 package org.vincentyeh.IMG2PDF.task.framework.factory;
 
 import org.vincentyeh.IMG2PDF.task.framework.factory.exception.TaskBuilderException;
-import org.vincentyeh.IMG2PDF.parameter.DocumentArgument;
-import org.vincentyeh.IMG2PDF.parameter.PageArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.DocumentArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageArgument;
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 
 import java.io.File;
@@ -22,28 +22,7 @@ public abstract class TaskBuilder<SOURCE> {
         DocumentArgument documentArgument = getDocumentArgumentFromSource(source);
         File[] images = getImagesFromSource(source);
         File destination = getPdfDestinationFromSource(source);
-
-        return new Task() {
-            @Override
-            public DocumentArgument getDocumentArgument() {
-                return documentArgument;
-            }
-
-            @Override
-            public PageArgument getPageArgument() {
-                return pageArgument;
-            }
-
-            @Override
-            public File[] getImages() {
-                return images;
-            }
-
-            @Override
-            public File getPdfDestination() {
-                return destination;
-            }
-        };
+        return new Task(documentArgument, pageArgument, images, destination);
     }
 
 }

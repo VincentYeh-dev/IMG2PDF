@@ -1,7 +1,7 @@
 package org.vincentyeh.IMG2PDF.commandline.concrete.converter;
 
 import org.vincentyeh.IMG2PDF.commandline.framework.converter.BasicCheckConverter;
-import org.vincentyeh.IMG2PDF.parameter.Permission;
+import org.vincentyeh.IMG2PDF.pdf.parameter.Permission;
 import picocli.CommandLine;
 
 public class PermissionConverter extends BasicCheckConverter<Permission> {
@@ -21,47 +21,16 @@ public class PermissionConverter extends BasicCheckConverter<Permission> {
             value[i] = (data & 128) != 0;
             data <<= 1;
         }
+        Permission permission=new Permission();
+        permission.setCanAssembleDocument(value[0]);
+        permission.setCanExtractContent(value[1]);
+        permission.setCanExtractForAccessibility(value[2]);
+        permission.setCanFillInForm(value[3]);
+        permission.setCanModify(value[4]);
+        permission.setCanModifyAnnotations(value[5]);
+        permission.setCanPrint(value[6]);
+        permission.setCanPrintDegraded(value[7]);
 
-        return new Permission() {
-            @Override
-            public boolean getCanAssembleDocument() {
-                return value[0];
-            }
-
-            @Override
-            public boolean getCanExtractContent() {
-                return value[1];
-            }
-
-            @Override
-            public boolean getCanExtractForAccessibility() {
-                return value[2];
-            }
-
-            @Override
-            public boolean getCanFillInForm() {
-                return value[3];
-            }
-
-            @Override
-            public boolean getCanModify() {
-                return value[4];
-            }
-
-            @Override
-            public boolean getCanModifyAnnotations() {
-                return value[5];
-            }
-
-            @Override
-            public boolean getCanPrint() {
-                return value[6];
-            }
-
-            @Override
-            public boolean getCanPrintDegraded() {
-                return value[7];
-            }
-        };
+        return permission;
     }
 }

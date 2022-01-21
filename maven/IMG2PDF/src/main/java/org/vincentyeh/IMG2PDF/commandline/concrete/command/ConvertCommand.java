@@ -5,6 +5,7 @@ import org.vincentyeh.IMG2PDF.commandline.concrete.converter.*;
 import org.vincentyeh.IMG2PDF.handler.ExceptionHandlerFacade;
 import org.vincentyeh.IMG2PDF.pdf.PDFacade;
 import org.vincentyeh.IMG2PDF.pdf.framework.converter.exception.PDFConversionException;
+import org.vincentyeh.IMG2PDF.pdf.parameter.*;
 import org.vincentyeh.IMG2PDF.task.TaskListFactoryFacade;
 import org.vincentyeh.IMG2PDF.configuration.framework.ConfigurationParser;
 import org.vincentyeh.IMG2PDF.handler.framework.CantHandleException;
@@ -16,7 +17,6 @@ import org.vincentyeh.IMG2PDF.task.framework.factory.TaskListFactory;
 import org.vincentyeh.IMG2PDF.util.file.FileSorter;
 import org.vincentyeh.IMG2PDF.util.file.FileUtils;
 import org.vincentyeh.IMG2PDF.util.file.exception.MakeDirectoryException;
-import org.vincentyeh.IMG2PDF.parameter.*;
 import picocli.CommandLine;
 
 import java.io.File;
@@ -158,53 +158,21 @@ public class ConvertCommand implements Callable<Integer> {
     }
 
     private PageArgument getPageArgument() {
-        return new PageArgument() {
-            @Override
-            public PageAlign getAlign() {
-                return pdf_align;
-            }
-
-            @Override
-            public PageSize getSize() {
-                return pdf_size;
-            }
-
-            @Override
-            public PageDirection getDirection() {
-                return pdf_direction;
-            }
-
-            @Override
-            public boolean autoRotate() {
-                return pdf_auto_rotate;
-            }
-        };
+        PageArgument argument=new PageArgument();
+        argument.setAlign(pdf_align);
+        argument.setSize(pdf_size);
+        argument.setDirection(pdf_direction);
+        argument.setAutoRotate(pdf_auto_rotate);
+        return argument;
     }
 
     private DocumentArgument getDocumentArgument() {
-        return new DocumentArgument() {
-
-            @Override
-            public String getOwnerPassword() {
-                return pdf_owner_password;
-            }
-
-            @Override
-            public String getUserPassword() {
-                return pdf_user_password;
-            }
-
-            @Override
-            public Permission getPermission() {
-                return pdf_permission;
-            }
-
-            @Override
-            public PDFDocumentInfo getInformation() {
-                return null;
-            }
-
-        };
+        DocumentArgument argument=new DocumentArgument();
+        argument.setInformation(null);
+        argument.setOwnerPassword(pdf_owner_password);
+        argument.setUserPassword(pdf_user_password);
+        argument.setPermission(pdf_permission);
+        return argument;
     }
 
     private void convertAllToFile(List<Task> tasks) throws MakeDirectoryException {

@@ -4,8 +4,8 @@ import org.vincentyeh.IMG2PDF.task.concrete.factory.exception.EmptyImagesExcepti
 import org.vincentyeh.IMG2PDF.task.concrete.factory.exception.LineTaskBuilderException;
 import org.vincentyeh.IMG2PDF.task.framework.factory.exception.TaskBuilderException;
 import org.vincentyeh.IMG2PDF.util.interfaces.NameFormatter;
-import org.vincentyeh.IMG2PDF.parameter.DocumentArgument;
-import org.vincentyeh.IMG2PDF.parameter.PageArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.DocumentArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageArgument;
 import org.vincentyeh.IMG2PDF.task.framework.factory.TaskBuilder;
 
 import java.io.File;

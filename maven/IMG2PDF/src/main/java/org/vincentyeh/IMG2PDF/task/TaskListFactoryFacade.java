@@ -1,7 +1,7 @@
 package org.vincentyeh.IMG2PDF.task;
 
-import org.vincentyeh.IMG2PDF.parameter.DocumentArgument;
-import org.vincentyeh.IMG2PDF.parameter.PageArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.DocumentArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageArgument;
 import org.vincentyeh.IMG2PDF.task.concrete.factory.DirectoryTaskListFactory;
 import org.vincentyeh.IMG2PDF.task.concrete.factory.LineTaskBuilder;
 import org.vincentyeh.IMG2PDF.task.framework.factory.TaskListFactory;

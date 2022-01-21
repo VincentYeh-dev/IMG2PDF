@@ -7,7 +7,7 @@ import org.vincentyeh.IMG2PDF.image.reader.framework.ImageReader;
 import org.vincentyeh.IMG2PDF.pdf.framework.converter.exception.ReadImageException;
 import org.vincentyeh.IMG2PDF.pdf.concrete.objects.PdfBoxDocumentAdaptor;
 import org.vincentyeh.IMG2PDF.pdf.concrete.objects.PdfBoxPageAdaptor;
-import org.vincentyeh.IMG2PDF.parameter.PageArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageArgument;
 import org.vincentyeh.IMG2PDF.pdf.framework.calculation.strategy.ImagePageCalculateStrategy;
 import org.vincentyeh.IMG2PDF.pdf.framework.converter.PDFConverter;
 import org.vincentyeh.IMG2PDF.pdf.framework.objects.PdfDocument;
