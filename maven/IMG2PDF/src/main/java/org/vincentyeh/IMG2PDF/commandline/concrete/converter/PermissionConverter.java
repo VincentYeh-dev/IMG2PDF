@@ -1,7 +1,7 @@
 package org.vincentyeh.IMG2PDF.commandline.concrete.converter;
 
 import org.vincentyeh.IMG2PDF.commandline.framework.converter.BasicCheckConverter;
-import org.vincentyeh.IMG2PDF.parameter.Permission;
+import org.vincentyeh.IMG2PDF.pdf.parameter.Permission;
 import picocli.CommandLine;
 
 public class PermissionConverter extends BasicCheckConverter<Permission> {

@@ -1,6 +1,6 @@
 package org.vincentyeh.IMG2PDF.pdf.framework.calculation.strategy;
 
-import org.vincentyeh.IMG2PDF.parameter.PageArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageArgument;
 import org.vincentyeh.IMG2PDF.pdf.framework.calculation.Position;
 import org.vincentyeh.IMG2PDF.pdf.framework.calculation.Size;
 

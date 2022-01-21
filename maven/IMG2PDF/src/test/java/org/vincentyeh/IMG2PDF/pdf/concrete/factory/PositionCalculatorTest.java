@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.vincentyeh.IMG2PDF.pdf.framework.calculation.Position;
 import org.vincentyeh.IMG2PDF.pdf.framework.calculation.PositionCalculator;
 import org.vincentyeh.IMG2PDF.pdf.framework.calculation.Size;
-import org.vincentyeh.IMG2PDF.parameter.PageAlign;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageAlign;
 
 import java.util.ArrayList;
 import java.util.List;

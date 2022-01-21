@@ -1,8 +1,8 @@
 package org.vincentyeh.IMG2PDF.task.framework.factory;
 
 import org.vincentyeh.IMG2PDF.task.framework.factory.exception.TaskBuilderException;
-import org.vincentyeh.IMG2PDF.parameter.DocumentArgument;
-import org.vincentyeh.IMG2PDF.parameter.PageArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.DocumentArgument;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageArgument;
 import org.vincentyeh.IMG2PDF.task.framework.Task;
 
 import java.io.File;

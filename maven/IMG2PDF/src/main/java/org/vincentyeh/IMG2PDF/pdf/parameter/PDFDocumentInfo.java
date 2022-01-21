@@ -1,4 +1,4 @@
-package org.vincentyeh.IMG2PDF.parameter;
+package org.vincentyeh.IMG2PDF.pdf.parameter;
 
 public class PDFDocumentInfo {
     private String title;

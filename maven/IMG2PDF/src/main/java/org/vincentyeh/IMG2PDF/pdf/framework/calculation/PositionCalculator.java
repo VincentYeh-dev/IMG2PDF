@@ -1,6 +1,6 @@
 package org.vincentyeh.IMG2PDF.pdf.framework.calculation;
 
-import org.vincentyeh.IMG2PDF.parameter.PageAlign;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageAlign;
 
 public class PositionCalculator {
     private final PageAlign align;

@@ -1,7 +1,7 @@
 package org.vincentyeh.IMG2PDF.commandline.concrete.converter;
 
 import org.vincentyeh.IMG2PDF.commandline.framework.converter.BasicCheckConverter;
-import org.vincentyeh.IMG2PDF.parameter.PageAlign;
+import org.vincentyeh.IMG2PDF.pdf.parameter.PageAlign;
 
 public class PageAlignConverter extends BasicCheckConverter<PageAlign> {
     @Override
