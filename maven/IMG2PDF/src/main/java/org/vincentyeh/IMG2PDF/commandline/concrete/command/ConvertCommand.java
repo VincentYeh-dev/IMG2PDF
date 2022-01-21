@@ -182,29 +182,12 @@ public class ConvertCommand implements Callable<Integer> {
     }
 
     private DocumentArgument getDocumentArgument() {
-        return new DocumentArgument() {
-
-            @Override
-            public String getOwnerPassword() {
-                return pdf_owner_password;
-            }
-
-            @Override
-            public String getUserPassword() {
-                return pdf_user_password;
-            }
-
-            @Override
-            public Permission getPermission() {
-                return pdf_permission;
-            }
-
-            @Override
-            public PDFDocumentInfo getInformation() {
-                return null;
-            }
-
-        };
+        DocumentArgument argument=new DocumentArgument();
+        argument.setInformation(null);
+        argument.setOwnerPassword(pdf_owner_password);
+        argument.setUserPassword(pdf_user_password);
+        argument.setPermission(pdf_permission);
+        return argument;
     }
 
     private void convertAllToFile(List<Task> tasks) throws MakeDirectoryException {
