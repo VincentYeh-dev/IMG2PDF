@@ -3,7 +3,6 @@ package org.vincentyeh.IMG2PDF.pdf.concrete.converter;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.vincentyeh.IMG2PDF.image.reader.create.FixedImageReader;
 import org.vincentyeh.IMG2PDF.image.reader.framework.ImageReader;
 import org.vincentyeh.IMG2PDF.pdf.framework.converter.exception.ReadImageException;
 import org.vincentyeh.IMG2PDF.pdf.concrete.objects.PdfBoxDocumentAdaptor;

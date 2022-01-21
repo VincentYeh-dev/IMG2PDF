@@ -1,18 +1,14 @@
 package org.vincentyeh.IMG2PDF.image.reader.framework;
 
-import com.drew.imaging.ImageProcessingException;
-import com.drew.metadata.MetadataException;
-
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 public abstract class ImageReader {
-    public abstract BufferedImage read(File file) throws IOException, ImageProcessingException, MetadataException;
+    public abstract BufferedImage read(File file) throws Exception;
 
-    protected BufferedImage rotateImage(BufferedImage img, double degrees) {
+    public static BufferedImage rotateImage(BufferedImage img, double degrees) {
         if (degrees == 0 || degrees == 360)
             return img;
         double rads = Math.toRadians(degrees);

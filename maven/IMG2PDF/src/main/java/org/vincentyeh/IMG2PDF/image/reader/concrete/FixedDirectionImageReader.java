@@ -1,4 +1,4 @@
-package org.vincentyeh.IMG2PDF.image.reader.create;
+package org.vincentyeh.IMG2PDF.image.reader.concrete;
 
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-public class FixedImageReader extends ImageReader {
+public class FixedDirectionImageReader extends ImageReader {
     @Override
     public BufferedImage read(File file) throws IOException, ImageProcessingException, MetadataException {
         FileUtils.checkExists(file);
