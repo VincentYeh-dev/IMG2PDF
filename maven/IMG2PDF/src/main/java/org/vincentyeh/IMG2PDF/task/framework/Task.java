@@ -5,14 +5,33 @@ import org.vincentyeh.IMG2PDF.pdf.parameter.PageArgument;
 
 import java.io.File;
 
-public interface Task {
+public final class Task {
 
-    DocumentArgument getDocumentArgument();
+    private final DocumentArgument documentArgument;
+    private final PageArgument pageArgument;
+    private final File[] images;
+    private final File destination;
 
-    PageArgument getPageArgument();
+    public Task(DocumentArgument documentArgument, PageArgument pageArgument, File[] images, File destination) {
+        this.documentArgument = documentArgument;
+        this.pageArgument = pageArgument;
+        this.images = images;
+        this.destination = destination;
+    }
 
-    File[] getImages();
+    public final DocumentArgument getDocumentArgument() {
+        return documentArgument;
+    }
 
-    File getPdfDestination();
+    public final PageArgument getPageArgument() {
+        return pageArgument;
+    }
 
+    public final File[] getImages() {
+        return images;
+    }
+
+    public final File getPdfDestination() {
+        return destination;
+    }
 }

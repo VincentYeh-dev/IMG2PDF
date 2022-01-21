@@ -22,28 +22,7 @@ public abstract class TaskBuilder<SOURCE> {
         DocumentArgument documentArgument = getDocumentArgumentFromSource(source);
         File[] images = getImagesFromSource(source);
         File destination = getPdfDestinationFromSource(source);
-
-        return new Task() {
-            @Override
-            public DocumentArgument getDocumentArgument() {
-                return documentArgument;
-            }
-
-            @Override
-            public PageArgument getPageArgument() {
-                return pageArgument;
-            }
-
-            @Override
-            public File[] getImages() {
-                return images;
-            }
-
-            @Override
-            public File getPdfDestination() {
-                return destination;
-            }
-        };
+        return new Task(documentArgument, pageArgument, images, destination);
     }
 
 }
