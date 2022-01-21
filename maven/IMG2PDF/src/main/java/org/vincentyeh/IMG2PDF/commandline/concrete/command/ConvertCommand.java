@@ -158,27 +158,12 @@ public class ConvertCommand implements Callable<Integer> {
     }
 
     private PageArgument getPageArgument() {
-        return new PageArgument() {
-            @Override
-            public PageAlign getAlign() {
-                return pdf_align;
-            }
-
-            @Override
-            public PageSize getSize() {
-                return pdf_size;
-            }
-
-            @Override
-            public PageDirection getDirection() {
-                return pdf_direction;
-            }
-
-            @Override
-            public boolean autoRotate() {
-                return pdf_auto_rotate;
-            }
-        };
+        PageArgument argument=new PageArgument();
+        argument.setAlign(pdf_align);
+        argument.setSize(pdf_size);
+        argument.setDirection(pdf_direction);
+        argument.setAutoRotate(pdf_auto_rotate);
+        return argument;
     }
 
     private DocumentArgument getDocumentArgument() {
